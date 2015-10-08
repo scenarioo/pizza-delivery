@@ -11,7 +11,7 @@ repositories {
 }
 
 dependencies {
-    testCompile 'junit:junit:4.11'
+    compile 'junit:junit:4.11'
     compile 'org.seleniumhq.selenium:selenium-java:2.+'
     compile 'org.scenarioo:scenarioo-java:2.0.+'
 }
