@@ -1,0 +1,17 @@
+group = 'net.adiherzog'
+version = '1.0.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://raw.github.com/scenarioo/mvn-repo/master"
+    }
+}
+
+dependencies {
+    testCompile 'junit:junit:4.11'
+    compile 'org.seleniumhq.selenium:selenium-java:2.+'
+    compile 'org.scenarioo:scenarioo-java:2.0.+'
+}
