@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Hot Pizza Delivery</title>
+
+    <!-- Bootstrap -->
+    <link href="lib/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="lib/bootstrap-3.3.5-dist/css/bootstrap-theme.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="src/pizza.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="page-header">
+        <h1>Hot Pizza Delivery
+            <small>Best pizza in town!</small>
+        </h1>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+            <div id="step1">
+                <h3>Step 1: Select your pizza</h3>
+
+                <p>
+                    <input type="radio" name="pizza" value="Pizza Margherita" id="m"/> <label for="m">Pizza
+                    Margherita</label>
+                </p>
+
+                <p>
+                    <input type="radio" name="pizza" value="Pizza Verdura" id="v"/> <label for="v">Pizza
+                    Verdura</label>
+                </p>
+
+                <p>
+                    <input type="radio" name="pizza" value="Pizza Piccante" id="p"/> <label for="p">Pizza
+                    Piccante</label>
+                </p>
+
+                <p>
+                    <input type="radio" name="pizza" value="Pizza Al Capone" id="a"/> <label for="a">Pizza Al
+                    Capone</label>
+                </p>
+                <button id="pizza_next" class="btn btn-primary">Looks fine</button>
+            </div>
+            <div id="step2" style="display: none;">
+                <h3>Step 2: Select your drinks</h3>
+
+                <p>
+                    <input type="checkbox" name="drink_a" value="Aqua Minerale" id="da"/> <label for="da">Aqua
+                    Minerale</label>
+                </p>
+
+                <p>
+                    <input type="checkbox" name="drink_v" value="Vino Rosso" id="dv"/> <label for="dv">Vino
+                    Rosso</label>
+                </p>
+
+                <p>
+                    <input type="checkbox" name="drink_b" value="Lager Beer" id="db"/> <label for="db">Lager
+                    Beer</label>
+                </p>
+
+                <p>
+                    <input type="checkbox" name="drink_g" value="Grappa" id="dg"/> <label for="dg">Grappa</label>
+                </p>
+                <button id="drink_next" class="btn btn-primary">Alright</button>
+            </div>
+            <div id="step3" style="display: none;">
+                <h3>Step 3: Summary of your order</h3>
+
+                <p>Pizza: <span id="summary_pizza"></span></p>
+
+                <p>Drinks: <span id="summary_drinks"></span></p>
+
+                <button id="summary_next" class="btn btn-primary">Order</button>
+            </div>
+            <div id="step4" style="display: none;">
+                <h3>Step 4: Thanks for your order!</h3>
+
+                <p>A <span id="confirmation_pizza"></span> (plus drinks: <span id="confirmation_drinks"></span>) will
+                    soon be on the way to you!</p>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="lib/jquery/jquery-1.11.3.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="lib/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+<!-- Appliation code -->
+<script src="src/pizza.js"></script>
+
+</body>
+</html>
