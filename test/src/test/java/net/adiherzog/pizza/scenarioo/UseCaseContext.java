@@ -1,13 +1,13 @@
 package net.adiherzog.pizza.scenarioo;
 
-import net.adiherzog.pizza.infrastructure.WebDriverHolder;
+import net.adiherzog.pizza.selenium.WebDriverHolder;
 import net.adiherzog.pizza.webtests.WebTest;
-import org.scenarioo.api.ScenarioDocuWriter;
-import org.scenarioo.model.docu.entities.Scenario;
-import org.scenarioo.model.docu.entities.Status;
-import org.scenarioo.model.docu.entities.UseCase;
+import org.openqa.selenium.JavascriptExecutor;
 
+import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 public class UseCaseContext {
@@ -17,6 +17,7 @@ public class UseCaseContext {
     private WebTest webTestClass;
     private String useCaseName;
     private int stepIndex = 0;
+    private String pageName;
 
     public UseCaseContext(WebTest webTestClass) {
         this.webTestClass = webTestClass;
@@ -32,53 +33,67 @@ public class UseCaseContext {
         return webTestClass.name.getMethodName();
     }
 
+    public org.scenarioo.model.docu.entities.Labels getScenarioLabels() {
+        Method method = getMethod();
+        Labels labels = method.getAnnotation(Labels.class);
+        if(labels != null) {
+            org.scenarioo.model.docu.entities.Labels scenarioLabels = new org.scenarioo.model.docu.entities.Labels();
+            scenarioLabels.setLabels(new HashSet<String>(Arrays.asList(labels.value())));
+            return scenarioLabels;
+        }
+        return null;
+    }
+
+    public String getScenarioDescription() {
+        Method method = getMethod();
+        Description description = method.getAnnotation(Description.class);
+        if(description != null) {
+            return description.value();
+        }
+        return null;
+    }
+
     public Integer getStepIndex() {
         return stepIndex;
     }
 
-    public void setStepIndex(Integer stepIndex) {
-        this.stepIndex = stepIndex;
-    }
-
     public void startNewScenario() {
-        setStepIndex(0);
+        stepIndex = 0;
     }
 
-    /**
-     * Call this in the @After method of your tests, so that the final screen of the webtest
-     * can be saved as a step.
-     */
-    public void recordLastStep() {
-        new StepRecorder(this).recordStep(WebDriverHolder.INSTANCE.getWebDriver());
-        ScenarioDocuWriter scenarioDocuWriter = ScenariooWriterFactory.getNewWriter();
-        scenarioDocuWriter.saveScenario(getUseCaseName(), createScenario());
-        scenarioDocuWriter.flush();
+    public void incrementStepIndex() {
+        this.stepIndex++;
     }
 
-    private Scenario createScenario() {
-        Scenario scenario = new Scenario();
-        scenario.setName(getScenarioName());
-        scenario.setStatus(Status.SUCCESS);
-        scenario.addLabel("good scenario");
-        return scenario;
+    public void recordLastStepAndScenario() {
+        new StepRecorder(this).recordStep();
+        new ScenarioRecorder(this).recordScenario();
     }
 
     public static void finishUseCase(Class<? extends WebTest> webTestClass) {
-        ScenarioDocuWriter scenarioDocuWriter = ScenariooWriterFactory.getNewWriter();
-        scenarioDocuWriter.saveUseCase(createUseCase(webTestClass));
-        scenarioDocuWriter.flush();
-    }
-
-    private static UseCase createUseCase(Class<? extends WebTest> webTestClass) {
-        UseCase useCase = new UseCase();
-        useCase.setName(UseCaseContext.getContextForClass(webTestClass).getUseCaseName());
-        useCase.addLabel("important");
-        useCase.setStatus(Status.SUCCESS);
-        return useCase;
+        new UseCaseRecorder(UseCaseContext.getContextForClass(webTestClass)).recordUseCase();
     }
 
     public static UseCaseContext getContextForClass(Class<? extends WebTest> webTestClass) {
         return contextsByWebTestClass.get(webTestClass);
+    }
+
+    public Method getMethod() {
+        try {
+            return webTestClass.getClass().getMethod(webTestClass.name.getMethodName());
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public String getPageName() {
+        String script = "return document.getElementById('currentStep').innerHTML";
+        String currentStep = (String) ((JavascriptExecutor) WebDriverHolder.INSTANCE.getWebDriver()).executeScript(script);
+        if(currentStep == null) {
+            return null;
+        }
+        return currentStep.replace("step-", "");
     }
 
 }

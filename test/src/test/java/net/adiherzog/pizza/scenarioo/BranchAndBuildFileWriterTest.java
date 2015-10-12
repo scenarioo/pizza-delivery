@@ -6,7 +6,8 @@ import org.scenarioo.model.docu.entities.Branch;
 import org.scenarioo.model.docu.entities.Build;
 import org.scenarioo.model.docu.entities.Status;
 
-import java.io.File;
+import java.time.ZoneId;
+import java.util.Date;
 
 /**
  * This is not actually a test. We just use the fact that a test class
@@ -40,6 +41,8 @@ public class BranchAndBuildFileWriterTest {
         Build build = new Build();
         build.setName(TestConstants.BUILD);
         build.setStatus(Status.SUCCESS);
+        build.setDate(Date.from(TestConstants.DATE.atZone(ZoneId.systemDefault()).toInstant()));
+        build.setRevision("unknown");
         return build;
     }
 

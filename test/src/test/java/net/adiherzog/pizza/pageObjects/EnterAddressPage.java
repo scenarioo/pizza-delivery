@@ -13,7 +13,6 @@ public class EnterAddressPage extends BasePage {
 
     public static void enterAddress() {
         WebDriver webDriver = getWebDriver();
-
         webDriver.findElement(By.id("streetAndHouseNumber")).sendKeys("Universitaetstrasse 9145");
         webDriver.findElement(By.id("zipCodeAndCity")).sendKeys("8006 Zuerich");
     }

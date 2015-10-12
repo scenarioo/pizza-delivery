@@ -1,6 +1,6 @@
 package net.adiherzog.pizza.pageObjects;
 
-import net.adiherzog.pizza.infrastructure.WebDriverHolder;
+import net.adiherzog.pizza.selenium.WebDriverHolder;
 import org.openqa.selenium.WebDriver;
 
 public class BasePage {

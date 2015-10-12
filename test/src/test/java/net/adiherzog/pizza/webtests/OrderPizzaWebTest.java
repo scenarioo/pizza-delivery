@@ -1,48 +1,16 @@
 package net.adiherzog.pizza.webtests;
 
-import net.adiherzog.pizza.infrastructure.WebDriverHolder;
 import net.adiherzog.pizza.pageObjects.*;
-import net.adiherzog.pizza.scenarioo.UseCaseContext;
-import org.junit.*;
+import net.adiherzog.pizza.scenarioo.Description;
+import net.adiherzog.pizza.scenarioo.Labels;
+import org.junit.Test;
 
 public class OrderPizzaWebTest extends WebTest {
 
-    @BeforeClass
-    public static void openBrowser() {
-        WebDriverHolder.INSTANCE.openBrowser();
-    }
-
-    @Before
-    public void setupTest() {
-        getUseCaseContext().startNewScenario();
-    }
-
     @Test
-    public void knownPhoneNumber_addressCorrect_doesNotAskToEnterAddress() {
-        EnterPhoneNumberPage.navigateToPage();
-        EnterPhoneNumberPage.enterKnownPhoneNumber();
-        EnterPhoneNumberPage.clickNext();
-
-        ConfirmAddressPage.assertPageIsShown();
-        ConfirmAddressPage.clickYes();
-
-        SelectPizzaPage.assertPageIsShown();
-    }
-
-    @Test
-    public void unknownPhoneNumber_asksToEnterAddress() {
-        EnterPhoneNumberPage.navigateToPage();
-        EnterPhoneNumberPage.enterUnknownPhoneNumber();
-        EnterPhoneNumberPage.clickNext();
-
-        EnterAddressPage.assertPageIsShown();
-        EnterAddressPage.enterAddress();
-        EnterAddressPage.clickNext();
-
-        SelectPizzaPage.assertPageIsShown();
-    }
-
-    @Test
+    @Labels({"main flow"})
+    @Description("Typical order process for a customer with a phone number " +
+            "that is already registered with the correct address.")
     public void orderPizza_plusRedWine() {
         EnterPhoneNumberPage.navigateToPage();
         EnterPhoneNumberPage.enterKnownPhoneNumber();
@@ -63,15 +31,37 @@ public class OrderPizzaWebTest extends WebTest {
         ConfirmationPage.assertConfirmationPageIsDisplayed();
     }
 
-    @After
-    public void recordLastStep() {
-        getUseCaseContext().recordLastStep();
+    @Test
+    @Labels({"partial flow", "enter address"})
+    @Description("Phone number is already known, but the customer wants to correct the address.")
+    public void knownPhoneNumber_butIncorrectPhoneNumber() {
+        EnterPhoneNumberPage.navigateToPage();
+        EnterPhoneNumberPage.enterKnownPhoneNumber();
+        EnterPhoneNumberPage.clickNext();
+
+        ConfirmAddressPage.assertPageIsShown();
+        ConfirmAddressPage.clickNo();
+
+        EnterAddressPage.assertPageIsShown();
+        EnterAddressPage.enterAddress();
+        EnterAddressPage.clickNext();
+
+        SelectPizzaPage.assertPageIsShown();
     }
 
-    @AfterClass
-    public static void closeBrowser() {
-        UseCaseContext.finishUseCase(OrderPizzaWebTest.class);
-        WebDriverHolder.INSTANCE.closeBrowser();
+    @Test
+    @Labels({"partial flow", "enter address"})
+    @Description("Phone number is not known yet, therefore the customer has to enter the address.")
+    public void unknownPhoneNumber_asksToEnterAddress() {
+        EnterPhoneNumberPage.navigateToPage();
+        EnterPhoneNumberPage.enterUnknownPhoneNumber();
+        EnterPhoneNumberPage.clickNext();
+
+        EnterAddressPage.assertPageIsShown();
+        EnterAddressPage.enterAddress();
+        EnterAddressPage.clickNext();
+
+        SelectPizzaPage.assertPageIsShown();
     }
 
 }

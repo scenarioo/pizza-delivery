@@ -1,10 +1,9 @@
 package net.adiherzog.pizza.scenarioo;
 
-import net.adiherzog.pizza.infrastructure.WebDriverHolder;
+import net.adiherzog.pizza.selenium.WebDriverHolder;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.scenarioo.api.ScenarioDocuWriter;
 import org.scenarioo.model.docu.entities.*;
 
@@ -18,17 +17,17 @@ public class StepRecorder {
         this.useCaseContext = useCaseContext;
     }
 
-    public void recordStep(WebDriver driver) {
+    public void recordStep() {
+        WebDriver webDriver = WebDriverHolder.INSTANCE.getWebDriver();
         String useCaseName = useCaseContext.getUseCaseName();
         String scenarioName = useCaseContext.getScenarioName();
-
-        Integer stepIndex = useCaseContext.getStepIndex();
+        int stepIndex = useCaseContext.getStepIndex();
 
         ScenarioDocuWriter scenarioDocuWriter = ScenariooWriterFactory.getNewWriter();
-        scenarioDocuWriter.saveScreenshotAsPng(useCaseName, scenarioName, stepIndex, getScreenshot(driver));
+        scenarioDocuWriter.saveScreenshotAsPng(useCaseName, scenarioName, stepIndex, getScreenshot(webDriver));
         File screenShotFileName = scenarioDocuWriter.getScreenshotFile(useCaseName, scenarioName, stepIndex);
         scenarioDocuWriter.saveStep(useCaseName, scenarioName, createStep(stepIndex, screenShotFileName));
-        useCaseContext.setStepIndex(stepIndex + 1);
+        useCaseContext.incrementStepIndex();
         scenarioDocuWriter.flush();
     }
 
@@ -41,8 +40,14 @@ public class StepRecorder {
         step.setStepDescription(createStepDescription(stepIndex, screenShotFileName));
         step.setHtml(new StepHtml());
         step.getHtml().setHtmlSource(WebDriverHolder.INSTANCE.getWebDriver().getPageSource());
-        step.setPage(new Page());
+        step.setPage(createPage());
         return step;
+    }
+
+    private Page createPage() {
+        Page page = new Page();
+        page.setName(useCaseContext.getPageName());
+        return page;
     }
 
     private StepDescription createStepDescription(Integer stepIndex, File screenShotFileName) {

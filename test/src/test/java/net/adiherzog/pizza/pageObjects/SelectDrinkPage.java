@@ -1,6 +1,5 @@
 package net.adiherzog.pizza.pageObjects;
 
-import net.adiherzog.pizza.infrastructure.WebDriverHolder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
