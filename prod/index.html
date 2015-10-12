@@ -27,8 +27,40 @@
     <div class="panel panel-default">
         <div class="panel-body">
 
-            <div id="step1">
-                <h3>Step 1: Select your pizza</h3>
+            <div id="step-enterPhoneNumber">
+                <h3>Please enter your phone number</h3>
+
+                <p>
+                    <strong>Phone number:</strong> <input type="text" id="phoneNumber" maxlength="15" size="20" />
+                </p>
+
+                <button class="next" class="btn btn-primary">Next</button>
+            </div>
+
+            <div id="step-confirmAddress" style="display: none;">
+                <h3>Confirm your address</h3>
+
+                <p>Is the following address still correct?</p>
+
+                <p><strong>Street and house number</strong>: Heimlieferstrasse 123</p>
+                <p><strong>Zip code and City</strong>: 8001 Zürich</p>
+
+                <button class="yes" class="btn btn-primary">Yes</button> <button class="no" class="btn btn-primary">No</button>
+            </div>
+
+            <div id="step-enterAddress" style="display: none;">
+                <h3>Enter your address</h3>
+
+                <p>Seems we don't know your correct address yet. Please enter it below:</p>
+
+                <p><strong>Street and house number</strong>: <input type="text" name="streetAndHouseNumber" maxlength="40" size="30" /></p>
+                <p><strong>Zip code and City</strong>: <input type="text" name="zipCodeAndCity" maxlength="40" size="30" /></p>
+
+                <button class="next" class="btn btn-primary">Next</button>
+            </div>
+
+            <div id="step-selectPizza" style="display: none;">
+                <h3>Select your pizza</h3>
 
                 <p>
                     <input type="radio" name="pizza" value="Pizza Margherita" id="m"/> <label for="m">Pizza
@@ -49,10 +81,10 @@
                     <input type="radio" name="pizza" value="Pizza Al Capone" id="a"/> <label for="a">Pizza Al
                     Capone</label>
                 </p>
-                <button id="pizza_next" class="btn btn-primary">Looks fine</button>
+                <button class="next" class="btn btn-primary">Looks fine</button>
             </div>
-            <div id="step2" style="display: none;">
-                <h3>Step 2: Select your drinks</h3>
+            <div id="step-selectDrinks" style="display: none;">
+                <h3>Select your drinks</h3>
 
                 <p>
                     <input type="checkbox" name="drink_a" value="Aqua Minerale" id="da"/> <label for="da">Aqua
@@ -72,19 +104,19 @@
                 <p>
                     <input type="checkbox" name="drink_g" value="Grappa" id="dg"/> <label for="dg">Grappa</label>
                 </p>
-                <button id="drink_next" class="btn btn-primary">Alright</button>
+                <button class="next" class="btn btn-primary">Alright</button>
             </div>
-            <div id="step3" style="display: none;">
-                <h3>Step 3: Summary of your order</h3>
+            <div id="step-summary" style="display: none;">
+                <h3>Summary of your order</h3>
 
                 <p>Pizza: <span id="summary_pizza"></span></p>
 
                 <p>Drinks: <span id="summary_drinks"></span></p>
 
-                <button id="summary_next" class="btn btn-primary">Order</button>
+                <button class="next" class="btn btn-primary">Order</button>
             </div>
-            <div id="step4" style="display: none;">
-                <h3>Step 4: Thanks for your order!</h3>
+            <div id="step-confirmation" style="display: none;">
+                <h3>Thanks for your order!</h3>
 
                 <p>A <span id="confirmation_pizza"></span> (plus drinks: <span id="confirmation_drinks"></span>) will
                     soon be on the way to you!</p>

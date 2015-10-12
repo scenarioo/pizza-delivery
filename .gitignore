@@ -1,2 +1,4 @@
 .idea
 test/scenariooDocumentation
+test/build
+test/.gradle
