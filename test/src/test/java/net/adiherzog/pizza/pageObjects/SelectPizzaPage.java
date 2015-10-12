@@ -1,20 +1,26 @@
 package net.adiherzog.pizza.pageObjects;
 
 import net.adiherzog.pizza.infrastructure.WebDriverHolder;
+import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
-public class SelectPizzaPage {
+public class SelectPizzaPage extends BasePage {
 
-    public static void navigateToPage() {
-        WebDriverHolder.INSTANCE.getWebDriver().get("http://htmlpreview.github.io/?https://github.com/adiherzog/pizza-delivery/blob/master/prod/index.html");
+    public static void assertPageIsShown() {
+        Assert.assertTrue(getStepElement().isDisplayed());
     }
 
     public static void selectPizzaVerdura() {
-        WebDriverHolder.INSTANCE.getWebDriver().findElement(By.id("v")).click();
+        getWebDriver().findElement(By.id("v")).click();
     }
 
     public static void clickNextButton() {
-        WebDriverHolder.INSTANCE.getWebDriver().findElement(By.id("pizza_next")).click();
+        getStepElement().findElement(By.className("next")).click();
+    }
+
+    private static WebElement getStepElement() {
+        return getWebDriver().findElement(By.id("step-selectPizza"));
     }
 
 }

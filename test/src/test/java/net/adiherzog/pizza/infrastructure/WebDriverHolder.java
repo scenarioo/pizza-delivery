@@ -2,7 +2,9 @@ package net.adiherzog.pizza.infrastructure;
 
 import net.adiherzog.pizza.scenarioo.ScenariooEventListener;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
@@ -13,65 +15,39 @@ public enum WebDriverHolder {
 
     INSTANCE;
 
-    private ThreadLocal<WebDriver> threadLocalWebDriver = new ThreadLocal<>();
-    private ThreadLocal<String> useCaseName = new ThreadLocal<>();
-    private ThreadLocal<String> scenarioName = new ThreadLocal<>();
-    private ThreadLocal<Integer> stepIndex = new ThreadLocal<>();
+    private EventFiringWebDriver webDriver;
 
     /**
      * Creates a new webdriver and opens a browser window.
      * Call this in the @Before or @BeforeClass method of your tests.
      */
     public void openBrowser() {
-        WebDriver webDriver = new FirefoxDriver();
-        EventFiringWebDriver eventFiringWebDriver = new EventFiringWebDriver(webDriver);
-        eventFiringWebDriver.register(new ScenariooEventListener());
-        threadLocalWebDriver.set(eventFiringWebDriver);
+        WebDriver firefoxDriver = new FirefoxDriver();
+        webDriver = new EventFiringWebDriver(firefoxDriver);
     }
 
     /**
-     * Only call if you already created a webdriver for your thread usind openBrowser().
+     * Register an event listener with the EventFiringWebDriver. The listener is in
+     * charge of saving steps for the Scenarioo documentation.
+     */
+    public void registerEventListener(ScenariooEventListener scenariooEventListener) {
+        ((EventFiringWebDriver)getWebDriver()).register(scenariooEventListener);
+    }
+
+    /**
+     * Only call after openBrowser()
      */
     public WebDriver getWebDriver() {
-        return threadLocalWebDriver.get();
+        return webDriver;
     }
 
     /**
-     * Only call if a webdriver actually exists for your thread.
-     * Call this in your @After or @AfterClass method of your tests.
+     * Only call after openBrowser()
+     * Call this in the @After or @AfterClass method of your tests.
      */
     public void closeBrowser() {
-        threadLocalWebDriver.get().quit();
+        webDriver.quit();
     }
 
-    /**
-     * Call this at the start of each use case so that steps can be put into the correct use case.
-     */
-    public void setUseCaseName(String useCaseName) {
-        this.useCaseName.set(useCaseName);
-    }
-
-    /**
-     * Call this before every scenario with the correct scenario name.
-     */
-    public void setScenarioName(String scenarioName) {
-        this.scenarioName.set(scenarioName);
-    }
-
-    public String getUseCaseName() {
-        return useCaseName.get();
-    }
-
-    public String getScenarioName() {
-        return scenarioName.get();
-    }
-
-    public Integer getStepIndex() {
-        return stepIndex.get();
-    }
-
-    public void setStepIndex(Integer stepIndex) {
-        this.stepIndex.set(stepIndex);
-    }
 
 }

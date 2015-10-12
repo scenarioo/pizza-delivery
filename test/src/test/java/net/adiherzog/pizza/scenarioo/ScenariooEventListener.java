@@ -15,12 +15,18 @@ import java.io.File;
 
 public class ScenariooEventListener extends AbstractWebDriverEventListener {
 
+    private StepRecorder stepRecorder;
+
+    public ScenariooEventListener(UseCaseContext useCaseContext) {
+       this.stepRecorder = new StepRecorder(useCaseContext);
+    }
+
     @Override
     public void beforeClickOn(WebElement element, WebDriver driver) {
         super.beforeClickOn(element, driver);
 
-        new StepRecorder().recordStep(driver);
+        // Records a step in Scenarioo before each click
+        stepRecorder.recordStep(driver);
     }
-
 
 }

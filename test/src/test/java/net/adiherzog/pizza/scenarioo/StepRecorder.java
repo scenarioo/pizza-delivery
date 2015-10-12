@@ -12,17 +12,23 @@ import java.io.File;
 
 public class StepRecorder {
 
-    public void recordStep(WebDriver driver) {
-        String useCaseName = WebDriverHolder.INSTANCE.getUseCaseName();
-        String scenarioName = WebDriverHolder.INSTANCE.getScenarioName();
+    private UseCaseContext useCaseContext;
 
-        Integer stepIndex = WebDriverHolder.INSTANCE.getStepIndex();
+    public StepRecorder(UseCaseContext useCaseContext) {
+        this.useCaseContext = useCaseContext;
+    }
+
+    public void recordStep(WebDriver driver) {
+        String useCaseName = useCaseContext.getUseCaseName();
+        String scenarioName = useCaseContext.getScenarioName();
+
+        Integer stepIndex = useCaseContext.getStepIndex();
 
         ScenarioDocuWriter scenarioDocuWriter = ScenariooWriterFactory.getNewWriter();
         scenarioDocuWriter.saveScreenshotAsPng(useCaseName, scenarioName, stepIndex, getScreenshot(driver));
         File screenShotFileName = scenarioDocuWriter.getScreenshotFile(useCaseName, scenarioName, stepIndex);
         scenarioDocuWriter.saveStep(useCaseName, scenarioName, createStep(stepIndex, screenShotFileName));
-        WebDriverHolder.INSTANCE.setStepIndex(stepIndex + 1);
+        useCaseContext.setStepIndex(stepIndex + 1);
         scenarioDocuWriter.flush();
     }
 

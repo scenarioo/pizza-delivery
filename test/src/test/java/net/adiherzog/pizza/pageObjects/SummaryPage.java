@@ -4,11 +4,12 @@ import net.adiherzog.pizza.infrastructure.WebDriverHolder;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
-public class SummaryPage {
+public class SummaryPage extends BasePage {
 
     public static void assertPizzaVerduraAndRedWineAreListed() {
-        WebDriver webDriver = WebDriverHolder.INSTANCE.getWebDriver();
+        WebDriver webDriver = getWebDriver();
         String pizza = webDriver.findElement(By.id("summary_pizza")).getText();
         String drinks = webDriver.findElement(By.id("summary_drinks")).getText();
 
@@ -17,7 +18,11 @@ public class SummaryPage {
     }
 
     public static void clickOrderButton() {
-        WebDriverHolder.INSTANCE.getWebDriver().findElement(By.id("summary_next")).click();
+        getStepElement().findElement(By.className("next")).click();
+    }
+
+    private static WebElement getStepElement() {
+        return getWebDriver().findElement(By.id("step-summary"));
     }
 
 }

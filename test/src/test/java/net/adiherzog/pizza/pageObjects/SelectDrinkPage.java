@@ -2,15 +2,20 @@ package net.adiherzog.pizza.pageObjects;
 
 import net.adiherzog.pizza.infrastructure.WebDriverHolder;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
-public class SelectDrinkPage {
+public class SelectDrinkPage extends BasePage {
 
     public static void selectDrinkRedWine() {
-        WebDriverHolder.INSTANCE.getWebDriver().findElement(By.id("dv")).click();
+        getWebDriver().findElement(By.id("dv")).click();
     }
 
     public static void clickNext() {
-        WebDriverHolder.INSTANCE.getWebDriver().findElement(By.id("drink_next")).click();
+        getStepElement().findElement(By.className("next")).click();
+    }
+
+    private static WebElement getStepElement() {
+        return getWebDriver().findElement(By.id("step-selectDrinks"));
     }
 
 }
