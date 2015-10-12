@@ -1,5 +1,6 @@
 package net.adiherzog.pizza.webtests;
 
+import net.adiherzog.pizza.scenarioo.UseCaseContextHolder;
 import net.adiherzog.pizza.selenium.WebDriverHolder;
 import net.adiherzog.pizza.scenarioo.ScenariooEventListener;
 import net.adiherzog.pizza.scenarioo.UseCaseContext;
@@ -15,6 +16,7 @@ public class WebTest {
 
     public WebTest() {
         useCaseContext = new UseCaseContext(this);
+        UseCaseContextHolder.INSTANCE.setUseCaseContext(useCaseContext);
         WebDriverHolder.INSTANCE.registerEventListener(new ScenariooEventListener(useCaseContext));
     }
 
@@ -39,7 +41,7 @@ public class WebTest {
 
     @AfterClass
     public static void closeBrowser() {
-        UseCaseContext.finishUseCase(OrderPizzaWebTest.class);
+        UseCaseContextHolder.INSTANCE.getUseCaseContext().finishUseCase();
         WebDriverHolder.INSTANCE.closeBrowser();
     }
 

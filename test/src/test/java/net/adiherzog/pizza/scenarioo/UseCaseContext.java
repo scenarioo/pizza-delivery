@@ -1,28 +1,28 @@
 package net.adiherzog.pizza.scenarioo;
 
+import net.adiherzog.pizza.scenarioo.annotations.Description;
+import net.adiherzog.pizza.scenarioo.annotations.Labels;
+import net.adiherzog.pizza.scenarioo.recorders.ScenarioRecorder;
+import net.adiherzog.pizza.scenarioo.recorders.StepRecorder;
+import net.adiherzog.pizza.scenarioo.recorders.UseCaseRecorder;
 import net.adiherzog.pizza.selenium.WebDriverHolder;
 import net.adiherzog.pizza.webtests.WebTest;
 import org.openqa.selenium.JavascriptExecutor;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 
 public class UseCaseContext {
-
-    private static Map<Class<? extends WebTest>, UseCaseContext> contextsByWebTestClass = new HashMap<>();
 
     private WebTest webTestClass;
     private String useCaseName;
     private int stepIndex = 0;
-    private String pageName;
 
-    public UseCaseContext(WebTest webTestClass) {
-        this.webTestClass = webTestClass;
-        this.useCaseName = webTestClass.getClass().getSimpleName().replace("WebTest", "");
-        contextsByWebTestClass.put(webTestClass.getClass(), this);
+    public UseCaseContext(WebTest webTest) {
+        this.webTestClass = webTest;
+        this.useCaseName = webTest.getClass().getSimpleName().replace("WebTest", "");
+        System.out.println("UseCaseContext for " + this.useCaseName);
     }
 
     public String getUseCaseName() {
@@ -70,12 +70,8 @@ public class UseCaseContext {
         new ScenarioRecorder(this).recordScenario();
     }
 
-    public static void finishUseCase(Class<? extends WebTest> webTestClass) {
-        new UseCaseRecorder(UseCaseContext.getContextForClass(webTestClass)).recordUseCase();
-    }
-
-    public static UseCaseContext getContextForClass(Class<? extends WebTest> webTestClass) {
-        return contextsByWebTestClass.get(webTestClass);
+    public void finishUseCase() {
+        new UseCaseRecorder(this).recordUseCase();
     }
 
     public Method getMethod() {

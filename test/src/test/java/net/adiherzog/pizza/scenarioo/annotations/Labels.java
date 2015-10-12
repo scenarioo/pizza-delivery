@@ -1,4 +1,4 @@
-package net.adiherzog.pizza.scenarioo;
+package net.adiherzog.pizza.scenarioo.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

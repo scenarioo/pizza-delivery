@@ -1,5 +1,7 @@
-package net.adiherzog.pizza.scenarioo;
+package net.adiherzog.pizza.scenarioo.recorders;
 
+import net.adiherzog.pizza.scenarioo.ScenariooWriterFactory;
+import net.adiherzog.pizza.scenarioo.UseCaseContext;
 import net.adiherzog.pizza.selenium.WebDriverHolder;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;

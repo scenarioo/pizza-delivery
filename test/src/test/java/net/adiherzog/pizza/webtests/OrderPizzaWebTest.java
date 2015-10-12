@@ -1,8 +1,8 @@
 package net.adiherzog.pizza.webtests;
 
 import net.adiherzog.pizza.pageObjects.*;
-import net.adiherzog.pizza.scenarioo.Description;
-import net.adiherzog.pizza.scenarioo.Labels;
+import net.adiherzog.pizza.scenarioo.annotations.Description;
+import net.adiherzog.pizza.scenarioo.annotations.Labels;
 import org.junit.Test;
 
 public class OrderPizzaWebTest extends WebTest {

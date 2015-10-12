@@ -1,5 +1,7 @@
-package net.adiherzog.pizza.scenarioo;
+package net.adiherzog.pizza.webtests;
 
+import net.adiherzog.pizza.scenarioo.ScenariooWriterFactory;
+import net.adiherzog.pizza.scenarioo.TestConstants;
 import org.junit.Test;
 import org.scenarioo.api.ScenarioDocuWriter;
 import org.scenarioo.model.docu.entities.Branch;

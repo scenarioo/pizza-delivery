@@ -1,5 +1,6 @@
 package net.adiherzog.pizza.scenarioo;
 
+import net.adiherzog.pizza.scenarioo.recorders.StepRecorder;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.AbstractWebDriverEventListener;
