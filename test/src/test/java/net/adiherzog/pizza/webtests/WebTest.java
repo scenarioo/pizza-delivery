@@ -15,6 +15,14 @@ public class WebTest {
     private UseCaseContext useCaseContext;
 
     public WebTest() {
+        UseCaseContext existingContext = UseCaseContextHolder.INSTANCE.getUseCaseContext();
+        if(existingContext != null && existingContext.getWebTest().getClass().equals(this.getClass())) {
+            // We need to do this check because JUnit creates a new class instance for each test method.
+            // See: http://martinfowler.com/bliki/JunitNewInstance.html
+            useCaseContext = existingContext;
+            useCaseContext.setWebTest(this);
+            return;
+        }
         useCaseContext = new UseCaseContext(this);
         UseCaseContextHolder.INSTANCE.setUseCaseContext(useCaseContext);
         WebDriverHolder.INSTANCE.registerEventListener(new ScenariooEventListener(useCaseContext));

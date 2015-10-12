@@ -15,14 +15,21 @@ import java.util.HashSet;
 
 public class UseCaseContext {
 
-    private WebTest webTestClass;
+    private WebTest webTest;
     private String useCaseName;
     private int stepIndex = 0;
 
     public UseCaseContext(WebTest webTest) {
-        this.webTestClass = webTest;
+        this.webTest = webTest;
         this.useCaseName = webTest.getClass().getSimpleName().replace("WebTest", "");
-        System.out.println("UseCaseContext for " + this.useCaseName);
+    }
+
+    public void setWebTest(WebTest webTest) {
+        this.webTest = webTest;
+    }
+
+    public WebTest getWebTest() {
+        return webTest;
     }
 
     public String getUseCaseName() {
@@ -30,7 +37,7 @@ public class UseCaseContext {
     }
 
     public String getScenarioName() {
-        return webTestClass.name.getMethodName();
+        return webTest.name.getMethodName();
     }
 
     public org.scenarioo.model.docu.entities.Labels getScenarioLabels() {
@@ -76,7 +83,7 @@ public class UseCaseContext {
 
     public Method getMethod() {
         try {
-            return webTestClass.getClass().getMethod(webTestClass.name.getMethodName());
+            return webTest.getClass().getMethod(webTest.name.getMethodName());
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
             return null;
