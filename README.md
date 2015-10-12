@@ -6,7 +6,9 @@ Simple Selenium and Scenarioo demo in Java.
 
 The production code is a very simple pizza ordering web app without a dynamic backend. It's all in the folder `prod`.
 
-If you can't wait to see the pizza awesomeness, look [here](http://htmlpreview.github.io/?https://github.com/adiherzog/pizza-delivery/blob/master/prod/index.html) ;-)
+To serve this as a website there is a `gh-pages` branch.
+
+If you can't wait to see the pizza awesomeness, look [here](http://adiherzog.github.io/pizza-delivery/prod/index.html) ;-)
 
 ## Test code
 
