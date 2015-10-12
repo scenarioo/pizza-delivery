@@ -12,7 +12,9 @@
     };
 
     // UI state
-    var currentStep = steps.enterPhoneNumber;
+    var currentStepOnPage = $('#currentStep');
+    var currentStep;
+    setCurrentStep(steps.enterPhoneNumber);
 
     // Collected data
     var phoneNumber = '';
@@ -90,7 +92,12 @@
     function goToStep(toStep) {
         currentStep.hide();
         toStep.show();
-        currentStep = toStep;
+        setCurrentStep(toStep);
+    }
+
+    function setCurrentStep(step) {
+        currentStep = step;
+        currentStepOnPage.text(step.attr('id'));
     }
 
 })();
