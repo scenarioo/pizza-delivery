@@ -1,6 +1,6 @@
 (function() {
 
-    // Wizzard steps
+    // Wizard steps
     var steps = {
         enterPhoneNumber : $('#step-enterPhoneNumber'),
         confirmAddress : $('#step-confirmAddress'),
