@@ -14,16 +14,16 @@ public class ScenarioRecorder {
         this.useCaseContext = useCaseContext;
     }
 
-    public void recordScenario() {
+    public void recordScenario(Status scenarioStatus) {
         ScenarioDocuWriter scenarioDocuWriter = ScenariooWriterFactory.getNewWriter();
-        scenarioDocuWriter.saveScenario(useCaseContext.getUseCaseName(), createScenario());
+        scenarioDocuWriter.saveScenario(useCaseContext.getUseCaseName(), createScenario(scenarioStatus));
         scenarioDocuWriter.flush();
     }
 
-    private Scenario createScenario() {
+    private Scenario createScenario(Status scenarioStatus) {
         Scenario scenario = new Scenario();
         scenario.setName(useCaseContext.getScenarioName());
-        scenario.setStatus(Status.SUCCESS);
+        scenario.setStatus(scenarioStatus);
         scenario.setLabels(useCaseContext.getScenarioLabels());
         scenario.setDescription(useCaseContext.getScenarioDescription());
         return scenario;

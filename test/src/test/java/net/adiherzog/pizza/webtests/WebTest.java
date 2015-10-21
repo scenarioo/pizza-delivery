@@ -1,9 +1,10 @@
 package net.adiherzog.pizza.webtests;
 
-import net.adiherzog.pizza.scenarioo.UseCaseContextHolder;
-import net.adiherzog.pizza.selenium.WebDriverHolder;
+import net.adiherzog.pizza.scenarioo.ScenarioRule;
 import net.adiherzog.pizza.scenarioo.ScenariooEventListener;
 import net.adiherzog.pizza.scenarioo.UseCaseContext;
+import net.adiherzog.pizza.scenarioo.UseCaseContextHolder;
+import net.adiherzog.pizza.selenium.WebDriverHolder;
 import org.junit.*;
 import org.junit.rules.TestName;
 
@@ -11,6 +12,9 @@ public class WebTest {
 
     @Rule
     public TestName name = new TestName();
+
+    @Rule
+    public ScenarioRule scenariooRule = new ScenarioRule();
 
     private UseCaseContext useCaseContext;
 
@@ -44,7 +48,7 @@ public class WebTest {
 
     @After
     public void recordLastStep() {
-        getUseCaseContext().recordLastStepAndScenario();
+        getUseCaseContext().recordLastStep();
     }
 
     @AfterClass

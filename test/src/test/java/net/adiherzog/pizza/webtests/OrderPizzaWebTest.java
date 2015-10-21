@@ -5,6 +5,7 @@ import net.adiherzog.pizza.scenarioo.annotations.Description;
 import net.adiherzog.pizza.scenarioo.annotations.Labels;
 import org.junit.Test;
 
+@Description("Order a pizza and drinks from \"Hot Pizza Delivery\".")
 public class OrderPizzaWebTest extends WebTest {
 
     @Test

@@ -3,7 +3,6 @@ package net.adiherzog.pizza.scenarioo.recorders;
 import net.adiherzog.pizza.scenarioo.ScenariooWriterFactory;
 import net.adiherzog.pizza.scenarioo.UseCaseContext;
 import org.scenarioo.api.ScenarioDocuWriter;
-import org.scenarioo.model.docu.entities.Status;
 import org.scenarioo.model.docu.entities.UseCase;
 
 public class UseCaseRecorder {
@@ -23,7 +22,9 @@ public class UseCaseRecorder {
     private UseCase createUseCase() {
         UseCase useCase = new UseCase();
         useCase.setName(useCaseContext.getUseCaseName());
-        useCase.setStatus(Status.SUCCESS);
+        useCase.setDescription(useCaseContext.getUseCaseDescription());
+        // We don't need to set the status here. It is automatically calculated
+        // from all the child scenario's statuses.
         return useCase;
     }
 

@@ -8,6 +8,7 @@ import net.adiherzog.pizza.scenarioo.recorders.UseCaseRecorder;
 import net.adiherzog.pizza.selenium.WebDriverHolder;
 import net.adiherzog.pizza.webtests.WebTest;
 import org.openqa.selenium.JavascriptExecutor;
+import org.scenarioo.model.docu.entities.Status;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -18,6 +19,7 @@ public class UseCaseContext {
     private WebTest webTest;
     private String useCaseName;
     private int stepIndex = 0;
+    private String useCaseDescription;
 
     public UseCaseContext(WebTest webTest) {
         this.webTest = webTest;
@@ -60,6 +62,14 @@ public class UseCaseContext {
         return null;
     }
 
+    public String getUseCaseDescription() {
+        Description description = webTest.getClass().getAnnotation(Description.class);
+        if(description != null) {
+            return description.value();
+        }
+        return null;
+    }
+
     public Integer getStepIndex() {
         return stepIndex;
     }
@@ -72,9 +82,12 @@ public class UseCaseContext {
         this.stepIndex++;
     }
 
-    public void recordLastStepAndScenario() {
+    public void recordLastStep() {
         new StepRecorder(this).recordStep();
-        new ScenarioRecorder(this).recordScenario();
+    }
+
+    public void recordScenario(Status scenarioStatus) {
+        new ScenarioRecorder(this).recordScenario(scenarioStatus);
     }
 
     public void finishUseCase() {
