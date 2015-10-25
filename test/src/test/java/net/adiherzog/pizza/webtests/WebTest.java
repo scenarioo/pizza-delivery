@@ -11,6 +11,6 @@ public class WebTest {
     public static UseCaseRule useCaseRule = new UseCaseRule();
 
     @Rule
-    public ScenarioRule testResult = new ScenarioRule();
+    public ScenarioRule scenarioRule = new ScenarioRule();
 
 }
