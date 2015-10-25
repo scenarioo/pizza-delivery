@@ -6,8 +6,8 @@ import net.adiherzog.pizza.scenarioo.recorders.ScenarioRecorder;
 import net.adiherzog.pizza.scenarioo.recorders.StepRecorder;
 import net.adiherzog.pizza.scenarioo.recorders.UseCaseRecorder;
 import net.adiherzog.pizza.selenium.WebDriverHolder;
-import net.adiherzog.pizza.webtests.WebTest;
 import org.openqa.selenium.JavascriptExecutor;
+import org.scenarioo.api.ScenarioDocuWriter;
 import org.scenarioo.model.docu.entities.Status;
 
 import java.lang.reflect.Method;
@@ -16,22 +16,20 @@ import java.util.HashSet;
 
 public class UseCaseContext {
 
-    private WebTest webTest;
+    private ScenarioDocuWriter writer = ScenariooWriterFactory.getNewWriter();
+    private Class<?> webTestClass;
     private String useCaseName;
     private int stepIndex = 0;
-    private String useCaseDescription;
+    private Status statusOfCurrentScenario;
+    private String currentTestMethodName;
 
-    public UseCaseContext(WebTest webTest) {
-        this.webTest = webTest;
-        this.useCaseName = webTest.getClass().getSimpleName().replace("WebTest", "");
+    public UseCaseContext(Class<?> webTestClass) {
+        this.webTestClass = webTestClass;
+        this.useCaseName = webTestClass.getSimpleName().replace("WebTest", "");
     }
 
-    public void setWebTest(WebTest webTest) {
-        this.webTest = webTest;
-    }
-
-    public WebTest getWebTest() {
-        return webTest;
+    public ScenarioDocuWriter getWriter() {
+        return writer;
     }
 
     public String getUseCaseName() {
@@ -39,7 +37,7 @@ public class UseCaseContext {
     }
 
     public String getScenarioName() {
-        return webTest.name.getMethodName();
+        return currentTestMethodName;
     }
 
     public org.scenarioo.model.docu.entities.Labels getScenarioLabels() {
@@ -47,7 +45,7 @@ public class UseCaseContext {
         Labels labels = method.getAnnotation(Labels.class);
         if(labels != null) {
             org.scenarioo.model.docu.entities.Labels scenarioLabels = new org.scenarioo.model.docu.entities.Labels();
-            scenarioLabels.setLabels(new HashSet<String>(Arrays.asList(labels.value())));
+            scenarioLabels.setLabels(new HashSet<>(Arrays.asList(labels.value())));
             return scenarioLabels;
         }
         return null;
@@ -63,7 +61,7 @@ public class UseCaseContext {
     }
 
     public String getUseCaseDescription() {
-        Description description = webTest.getClass().getAnnotation(Description.class);
+        Description description = webTestClass.getAnnotation(Description.class);
         if(description != null) {
             return description.value();
         }
@@ -74,8 +72,14 @@ public class UseCaseContext {
         return stepIndex;
     }
 
-    public void startNewScenario() {
+    public void startNewScenario(String methodName) {
         stepIndex = 0;
+        statusOfCurrentScenario = Status.SUCCESS;
+        currentTestMethodName = methodName;
+    }
+
+    public void setStatusOfCurrentScenario(Status statusOfCurrentScenario) {
+        this.statusOfCurrentScenario = statusOfCurrentScenario;
     }
 
     public void incrementStepIndex() {
@@ -86,17 +90,18 @@ public class UseCaseContext {
         new StepRecorder(this).recordStep();
     }
 
-    public void recordScenario(Status scenarioStatus) {
-        new ScenarioRecorder(this).recordScenario(scenarioStatus);
+    public void recordScenario() {
+        new ScenarioRecorder(this).recordScenario(statusOfCurrentScenario);
     }
 
     public void finishUseCase() {
         new UseCaseRecorder(this).recordUseCase();
+        writer.flush();
     }
 
     public Method getMethod() {
         try {
-            return webTest.getClass().getMethod(webTest.name.getMethodName());
+            return webTestClass.getMethod(currentTestMethodName);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
             return null;

@@ -1,8 +1,6 @@
 package net.adiherzog.pizza.scenarioo.recorders;
 
-import net.adiherzog.pizza.scenarioo.ScenariooWriterFactory;
 import net.adiherzog.pizza.scenarioo.UseCaseContext;
-import org.scenarioo.api.ScenarioDocuWriter;
 import org.scenarioo.model.docu.entities.Scenario;
 import org.scenarioo.model.docu.entities.Status;
 
@@ -15,9 +13,7 @@ public class ScenarioRecorder {
     }
 
     public void recordScenario(Status scenarioStatus) {
-        ScenarioDocuWriter scenarioDocuWriter = ScenariooWriterFactory.getNewWriter();
-        scenarioDocuWriter.saveScenario(useCaseContext.getUseCaseName(), createScenario(scenarioStatus));
-        scenarioDocuWriter.flush();
+        useCaseContext.getWriter().saveScenario(useCaseContext.getUseCaseName(), createScenario(scenarioStatus));
     }
 
     private Scenario createScenario(Status scenarioStatus) {

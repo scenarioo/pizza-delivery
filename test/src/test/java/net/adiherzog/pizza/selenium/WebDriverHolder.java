@@ -1,6 +1,8 @@
 package net.adiherzog.pizza.selenium;
 
 import net.adiherzog.pizza.scenarioo.ScenariooEventListener;
+import net.adiherzog.pizza.scenarioo.UseCaseContext;
+import net.adiherzog.pizza.scenarioo.UseCaseContextHolder;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
@@ -19,11 +21,15 @@ public enum WebDriverHolder {
 
     private EventFiringWebDriver webDriver;
 
-    public void openBrowser() {
+    /**
+     * Only call this after a use case context has been created for the current use case.
+     */
+    public void openBrowserAndRegisterEventListener() {
         webDriver = new EventFiringWebDriver(new FirefoxDriver());
-    }
 
-    public void registerEventListener(ScenariooEventListener scenariooEventListener) {
+        UseCaseContext useCaseContext = UseCaseContextHolder.INSTANCE.getUseCaseContext();
+        ScenariooEventListener scenariooEventListener = new ScenariooEventListener(useCaseContext);
+
         webDriver.register(scenariooEventListener);
     }
 

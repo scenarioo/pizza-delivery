@@ -1,5 +1,6 @@
 package net.adiherzog.pizza.pageObjects;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 
 public class EnterPhoneNumberPage extends BasePage {
@@ -25,6 +26,10 @@ public class EnterPhoneNumberPage extends BasePage {
 
     private static void enterPhoneNumber(String phoneNumber) {
         getWebDriver().findElement(By.id("phoneNumber")).sendKeys(phoneNumber);
+    }
+
+    public static void assertPhoneNumberOfHotPizzaDeliveryIsDisplayed() {
+        Assert.assertTrue(getWebDriver().findElement(By.id("hot-pizza-delivery-phone-number")).isDisplayed());
     }
 
 }

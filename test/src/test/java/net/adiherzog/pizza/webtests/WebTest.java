@@ -1,60 +1,16 @@
 package net.adiherzog.pizza.webtests;
 
-import net.adiherzog.pizza.scenarioo.ScenarioRule;
-import net.adiherzog.pizza.scenarioo.ScenariooEventListener;
-import net.adiherzog.pizza.scenarioo.UseCaseContext;
-import net.adiherzog.pizza.scenarioo.UseCaseContextHolder;
-import net.adiherzog.pizza.selenium.WebDriverHolder;
-import org.junit.*;
-import org.junit.rules.TestName;
+import net.adiherzog.pizza.scenarioo.rules.ScenarioRule;
+import net.adiherzog.pizza.scenarioo.rules.UseCaseRule;
+import org.junit.ClassRule;
+import org.junit.Rule;
 
 public class WebTest {
 
-    @Rule
-    public TestName name = new TestName();
+    @ClassRule
+    public static UseCaseRule useCaseRule = new UseCaseRule();
 
     @Rule
-    public ScenarioRule scenariooRule = new ScenarioRule();
-
-    private UseCaseContext useCaseContext;
-
-    public WebTest() {
-        UseCaseContext existingContext = UseCaseContextHolder.INSTANCE.getUseCaseContext();
-        if(existingContext != null && existingContext.getWebTest().getClass().equals(this.getClass())) {
-            // We need to do this check because JUnit creates a new class instance for each test method.
-            // See: http://martinfowler.com/bliki/JunitNewInstance.html
-            useCaseContext = existingContext;
-            useCaseContext.setWebTest(this);
-            return;
-        }
-        useCaseContext = new UseCaseContext(this);
-        UseCaseContextHolder.INSTANCE.setUseCaseContext(useCaseContext);
-        WebDriverHolder.INSTANCE.registerEventListener(new ScenariooEventListener(useCaseContext));
-    }
-
-    public UseCaseContext getUseCaseContext() {
-        return useCaseContext;
-    }
-
-    @BeforeClass
-    public static void openBrowser() {
-        WebDriverHolder.INSTANCE.openBrowser();
-    }
-
-    @Before
-    public void setupTest() {
-        getUseCaseContext().startNewScenario();
-    }
-
-    @After
-    public void recordLastStep() {
-        getUseCaseContext().recordLastStep();
-    }
-
-    @AfterClass
-    public static void closeBrowser() {
-        UseCaseContextHolder.INSTANCE.getUseCaseContext().finishUseCase();
-        WebDriverHolder.INSTANCE.closeBrowser();
-    }
+    public ScenarioRule testResult = new ScenarioRule();
 
 }

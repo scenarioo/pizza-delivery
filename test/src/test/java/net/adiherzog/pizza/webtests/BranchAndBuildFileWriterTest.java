@@ -14,7 +14,10 @@ import java.util.Date;
 /**
  * This is not actually a test. We just use the fact that a test class
  * is run exactly once during the build so this is a good moment
- * to create the Scenarioo branch.xml and build.xml files.
+ * to create the Scenarioo branch.xml and build.xml files. But there's also
+ * a problem that the status is not written correctly. So we could either
+ * create a test suite and run this at the end of the suite or then just write
+ * the branch.xml and build.xml in the build script.
  */
 public class BranchAndBuildFileWriterTest {
 
@@ -22,15 +25,12 @@ public class BranchAndBuildFileWriterTest {
     public void createBranchAndBuildFile() {
         TestConstants.DOCU_FOLDER.mkdirs();
 
-        ScenarioDocuWriter scenarioDocuWriter = ScenariooWriterFactory.getNewWriter();
+        ScenarioDocuWriter writer = ScenariooWriterFactory.getNewWriter();
 
-        Branch branch = createBranch();
-        scenarioDocuWriter.saveBranchDescription(branch);
+        writer.saveBranchDescription(createBranch());
+        writer.saveBuildDescription(createBuild());
 
-        Build build = createBuild();
-        scenarioDocuWriter.saveBuildDescription(build);
-
-        scenarioDocuWriter.flush();
+        writer.flush();
     }
 
     private Branch createBranch() {
@@ -42,6 +42,7 @@ public class BranchAndBuildFileWriterTest {
     private Build createBuild() {
         Build build = new Build();
         build.setName(TestConstants.BUILD);
+        // Here we should write the actual status of the entire build.
         build.setStatus(Status.SUCCESS);
         build.setDate(Date.from(TestConstants.DATE.atZone(ZoneId.systemDefault()).toInstant()));
         build.setRevision("unknown");

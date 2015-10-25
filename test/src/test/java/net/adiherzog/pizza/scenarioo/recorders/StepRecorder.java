@@ -1,6 +1,5 @@
 package net.adiherzog.pizza.scenarioo.recorders;
 
-import net.adiherzog.pizza.scenarioo.ScenariooWriterFactory;
 import net.adiherzog.pizza.scenarioo.UseCaseContext;
 import net.adiherzog.pizza.selenium.WebDriverHolder;
 import org.openqa.selenium.OutputType;
@@ -25,12 +24,11 @@ public class StepRecorder {
         String scenarioName = useCaseContext.getScenarioName();
         int stepIndex = useCaseContext.getStepIndex();
 
-        ScenarioDocuWriter scenarioDocuWriter = ScenariooWriterFactory.getNewWriter();
-        scenarioDocuWriter.saveScreenshotAsPng(useCaseName, scenarioName, stepIndex, getScreenshot(webDriver));
-        File screenShotFileName = scenarioDocuWriter.getScreenshotFile(useCaseName, scenarioName, stepIndex);
-        scenarioDocuWriter.saveStep(useCaseName, scenarioName, createStep(stepIndex, screenShotFileName));
+        ScenarioDocuWriter writer = useCaseContext.getWriter();
+        writer.saveScreenshotAsPng(useCaseName, scenarioName, stepIndex, getScreenshot(webDriver));
+        File screenShotFileName = writer.getScreenshotFile(useCaseName, scenarioName, stepIndex);
+        writer.saveStep(useCaseName, scenarioName, createStep(stepIndex, screenShotFileName));
         useCaseContext.incrementStepIndex();
-        scenarioDocuWriter.flush();
     }
 
     private byte[] getScreenshot(WebDriver driver) {
