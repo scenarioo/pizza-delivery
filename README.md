@@ -1,6 +1,8 @@
 # pizza-delivery
 
-Simple Selenium and Scenarioo demo in Java.
+Simple Selenium and Scenarioo Demo in Java.
+
+This example demonstrates how to use the Scenarioo Writer Library in your Selenium Webtests to produce Scenarioo Documentation data.
 
 ## Production code
 
