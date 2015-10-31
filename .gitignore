@@ -2,3 +2,4 @@
 test/scenariooDocumentation
 test/build
 test/.gradle
+test/test.iml

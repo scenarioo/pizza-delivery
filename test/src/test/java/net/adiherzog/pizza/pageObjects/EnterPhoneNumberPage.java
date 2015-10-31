@@ -9,7 +9,7 @@ public class EnterPhoneNumberPage extends BasePage {
     private static final String UNKNOWN_PHONE_NUMBER = "0792222222";
 
     public static void navigateToPage() {
-        getWebDriver().get("http://adiherzog.github.io/pizza-delivery/prod/index.html");
+        getWebDriver().get("http://scenarioo.github.io/pizza-delivery/prod/index.html");
     }
 
     public static void enterKnownPhoneNumber() {
