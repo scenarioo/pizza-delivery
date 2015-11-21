@@ -1,12 +1,12 @@
 package org.scenarioo.pizza.scenarioo.recorders;
 
-import org.scenarioo.pizza.scenarioo.UseCaseContext;
-import org.scenarioo.pizza.selenium.WebDriverHolder;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.scenarioo.api.ScenarioDocuWriter;
 import org.scenarioo.model.docu.entities.*;
+import org.scenarioo.pizza.scenarioo.UseCaseContext;
+import org.scenarioo.pizza.selenium.WebDriverHolder;
 
 import java.io.File;
 
@@ -41,6 +41,8 @@ public class StepRecorder {
         step.setHtml(new StepHtml());
         step.getHtml().setHtmlSource(WebDriverHolder.INSTANCE.getWebDriver().getPageSource());
         step.setPage(createPage());
+        step.setScreenAnnotations(useCaseContext.getScreenAnnotations());
+        useCaseContext.clearScreenAnnotations();
         return step;
     }
 

@@ -1,18 +1,21 @@
 package org.scenarioo.pizza.scenarioo;
 
+import org.openqa.selenium.JavascriptExecutor;
+import org.scenarioo.api.ScenarioDocuWriter;
+import org.scenarioo.model.docu.entities.Status;
+import org.scenarioo.model.docu.entities.screenAnnotations.ScreenAnnotation;
 import org.scenarioo.pizza.scenarioo.annotations.Description;
 import org.scenarioo.pizza.scenarioo.annotations.Labels;
 import org.scenarioo.pizza.scenarioo.recorders.ScenarioRecorder;
 import org.scenarioo.pizza.scenarioo.recorders.StepRecorder;
 import org.scenarioo.pizza.scenarioo.recorders.UseCaseRecorder;
 import org.scenarioo.pizza.selenium.WebDriverHolder;
-import org.openqa.selenium.JavascriptExecutor;
-import org.scenarioo.api.ScenarioDocuWriter;
-import org.scenarioo.model.docu.entities.Status;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 
 public class UseCaseContext {
 
@@ -22,6 +25,7 @@ public class UseCaseContext {
     private int stepIndex = 0;
     private Status statusOfCurrentScenario;
     private String currentTestMethodName;
+    private List<ScreenAnnotation> screenAnnotations = new LinkedList<ScreenAnnotation>();
 
     public UseCaseContext(Class<?> webTestClass) {
         this.webTestClass = webTestClass;
@@ -115,6 +119,19 @@ public class UseCaseContext {
             return null;
         }
         return currentStep.replace("step-", "");
+    }
+
+    public void addScreenAnnotation(ScreenAnnotation screenAnnotation) {
+        screenAnnotations.add(screenAnnotation);
+    }
+
+    public List<ScreenAnnotation> getScreenAnnotations() {
+        System.out.println(screenAnnotations.size() + " annotations");
+        return screenAnnotations;
+    }
+
+    public void clearScreenAnnotations() {
+        screenAnnotations = new LinkedList<ScreenAnnotation>();
     }
 
 }
