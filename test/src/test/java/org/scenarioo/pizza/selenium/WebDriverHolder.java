@@ -11,7 +11,7 @@ import org.openqa.selenium.support.events.EventFiringWebDriver;
  * This singleton creates and holds the reference to the WebDriver which controls the browser.
  * This makes it possible to access the WebDriver from all the page objects and wherever else
  * needed without passing any references.
- *
+ * <p>
  * Currently this holder only supports one concurrent WebDriver. If you want to run your tests in parallel
  * you should extend the holder to hold an instance of a WebDriver for each thread.
  */
@@ -38,7 +38,7 @@ public enum WebDriverHolder {
     }
 
     public void closeBrowser() {
-        webDriver.quit();
+        webDriver.close();
     }
 
 }
