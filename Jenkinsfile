@@ -17,5 +17,12 @@ timestamps {
                 }
             }
         }
+
+        stage('Deploy Scenarioo Test-Results') {
+            dir('test/build') {
+                zip archive: true, dir: 'scenariooDocumentation', zipFile: 'documentation.zip'
+            }
+
+        }
      }
 }
