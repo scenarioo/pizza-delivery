@@ -4,20 +4,17 @@ def gradle(tasks) {
 
 timestamps {
     node {
-        stages {
-            stage('Checkout') {
-                checkout scm
-            }
-
-            stage('Build and Run Tests') {
-                dir('test'){
-                    gradle 'clean build'
-                }
-            }
+	    stage('Checkout') {
+            checkout scm
         }
-        post {
-            always {
-                junit '**/build/test-results/*.xml'
+
+        stage('Build and Run Tests') {
+            dir('test'){
+                try {
+                    gradle 'clean build'
+                } finally {
+                    junit '**/build/test-results/*.xml'
+                }
             }
         }
      }
