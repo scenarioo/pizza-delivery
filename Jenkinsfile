@@ -1,5 +1,5 @@
 def gradle(tasks) {
-	 sh "test/gradlew --info $tasks"
+	 sh 'gradlew --info $tasks'
 }
 
 timestamps {
@@ -9,7 +9,9 @@ timestamps {
         }
         
         stage('Build') {
-            gradle 'build'
+            dir('test'){
+                gradle 'build'
+            }
         }
      }
 }
