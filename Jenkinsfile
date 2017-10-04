@@ -2,6 +2,7 @@ def gradle(tasks) {
 	 sh "./gradlew --debug $tasks"
 }
 
+
 timestamps {
     node {
 	    stage('Checkout') {
@@ -20,7 +21,7 @@ timestamps {
 
         stage('Deploy Scenarioo Test-Results') {
             dir('test/build') {
-                zip archive: true, dir: 'scenariooDocumentation', zipFile: 'documentation.zip'
+                zip archive: true, zipFile: 'documentation.zip'
             }
 
         }
