@@ -17,7 +17,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
-public class UseCaseContext {
+public class JenkUseCaseContext {
 
     private ScenarioDocuWriter writer = ScenariooWriterFactory.getNewWriter();
     private Class<?> webTestClass;
