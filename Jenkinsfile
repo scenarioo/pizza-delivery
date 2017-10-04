@@ -9,7 +9,7 @@ timestamps {
         }
         
         stage('Build') {
-            gradle 'clean build'
+            gradle 'build'
         }
      }
 }
