@@ -10,6 +10,7 @@ timestamps {
         
         stage('Build') {
             dir('test'){
+                sh "export DISPLAY=:99"
                 gradle 'build'
             }
         }
