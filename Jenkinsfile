@@ -10,8 +10,6 @@ timestamps {
         
         stage('Build and Run Tests') {
             dir('test'){
-                sh "Xvfb :98 &"
-                sh "export DISPLAY=:98"
                 gradle 'clean build'
             }
         }
