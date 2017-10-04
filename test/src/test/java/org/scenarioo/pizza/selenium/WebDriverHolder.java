@@ -1,5 +1,6 @@
 package org.scenarioo.pizza.selenium;
 
+import io.github.bonigarcia.wdm.ChromeDriverManager;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.scenarioo.pizza.scenarioo.ScenariooEventListener;
 import org.scenarioo.pizza.scenarioo.UseCaseContext;
@@ -25,6 +26,7 @@ public enum WebDriverHolder {
      * Only call this after a use case context has been created for the current use case.
      */
     public void openBrowserAndRegisterEventListener() {
+        ChromeDriverManager.getInstance().setup();
         webDriver = new EventFiringWebDriver(new ChromeDriver());
 
         UseCaseContext useCaseContext = UseCaseContextHolder.INSTANCE.getUseCaseContext();
