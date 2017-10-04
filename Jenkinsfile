@@ -4,8 +4,9 @@ def gradle(tasks) {
 
 timestamps {
     node {
-	    stage('Checkout') {
+	    stage('Prepare Environment') {
             checkout scm
+            sh "mkdir test/build/scenariooDocumentation"
         }
 
         stage('Build and Run Tests') {
