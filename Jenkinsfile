@@ -1,5 +1,5 @@
 def gradle(tasks) {
-	 sh "./gradlew --stacktrace $tasks"
+	 sh "./gradlew --info $tasks"
 }
 
 timestamps {
@@ -8,10 +8,10 @@ timestamps {
             checkout scm
         }
         
-        stage('Build') {
+        stage('Build and Run Tests') {
             dir('test'){
                 sh "export DISPLAY=:99"
-                gradle 'build'
+                gradle 'clean build'
             }
         }
      }
