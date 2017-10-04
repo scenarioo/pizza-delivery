@@ -9,6 +9,6 @@ public class TestConstants {
     public static final String BRANCH = "gh-pages";
     public static final LocalDateTime DATE = LocalDateTime.now();
     public static final String BUILD = DATE.format(DateTimeFormatter.ISO_DATE_TIME);
-    public static final File DOCU_FOLDER = new File("scenariooDocumentation");
+    public static final File DOCU_FOLDER = new File("build/scenariooDocumentation");
 
 }
