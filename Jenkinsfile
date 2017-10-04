@@ -13,5 +13,10 @@ timestamps {
                 gradle 'clean build'
             }
         }
+        post {
+            always {
+                junit '**/build/test-results/*.xml'
+            }
+        }
      }
 }
