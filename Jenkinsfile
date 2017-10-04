@@ -20,7 +20,10 @@ timestamps {
         }
 
         stage('Deploy Scenarioo Test-Results') {
-            zip archive: true, zipFile: 'documentation.zip'
+            dir('test/build') {
+                zip archive: true, dir: 'scenariooDocumentation/gh-pages', zipFile: 'documentation.zip'
+            }
+
         }
      }
 }
