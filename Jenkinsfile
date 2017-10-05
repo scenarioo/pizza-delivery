@@ -22,7 +22,7 @@ timestamps {
             dir('test/build') {
                 zip archive: true, dir: 'scenariooDocumentation', zipFile: 'documentation.zip'
                 withCredentials([usernamePassword(credentialsId: 'SCENARIOO_DEMO', passwordVariable: 'password', usernameVariable: 'user')]) {
-                    def cmd = /curl --user user:password -F "file=@documentation.zip" http://demo.scenarioo.org/scenarioo-master/rest/builds/
+                    def cmd = $/curl --user user:password -F \\\"file=@documentation.zip\\\" http://demo.scenarioo.org/scenarioo-master/rest/builds$/
                     sh cmd
                 }
             }
