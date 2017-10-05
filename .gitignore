@@ -1,4 +1,6 @@
 .idea
 test/build
 test/.gradle
+test/out
 test/test.iml
+.gradle

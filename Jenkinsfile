@@ -2,11 +2,6 @@ def gradle(tasks) {
 	 sh "./gradlew --info $tasks"
 }
 
-def getGitBranchName() {
-    return scm.branches[0].name
-}
-
-
 timestamps {
     node {
 	    stage('Checkout') {
