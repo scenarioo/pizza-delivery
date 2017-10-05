@@ -1,5 +1,9 @@
 def gradle(tasks) {
-	 sh "./gradlew --debug $tasks"
+	 sh "./gradlew --info $tasks"
+}
+
+def getGitBranchName() {
+    return scm.branches[0].name
 }
 
 
