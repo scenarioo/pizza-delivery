@@ -25,9 +25,13 @@ timestamps {
 
         stage('Deploy Scenarioo Test-Results') {
             dir('test/build') {
-                zip archive: true, dir: 'scenariooDocumentation', zipFile: 'documentation.zip'
+                zip dir: 'scenariooDocumentation', zipFile: 'documentation.zip'
                 withCredentials([usernameColonPassword(credentialsId: 'SCENARIOO_DEMO',variable: 'USERPASS')]) {
-                    sh 'curl -u $USERPASS -F file=@documentation.zip http://demo.scenarioo.org/scenarioo-master/rest/builds'
+                    sh '''
+                        curl -u $USERPASS
+                             -F file=@documentation.zip
+                             http://demo.scenarioo.org/scenarioo-master/rest/builds
+                       '''
                 }
             }
 
