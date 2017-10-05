@@ -2,7 +2,7 @@ def gradle(tasks) {
 	 sh "./gradlew --info $tasks"
 }
 
-def branchName() {
+def getGitBranchName() {
     return scm.branches[0].name
 }
 
@@ -16,9 +16,7 @@ timestamps {
         stage('Build and Run Tests') {
             dir('test'){
                 try {
-                    withEnv(['BRANCH_NAME=' + branchName]) { 
-                        gradle 'clean build'
-                    }
+                    gradle 'clean build'
                 } finally {
                     junit '**/build/test-results/*.xml'
                 }
