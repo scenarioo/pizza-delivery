@@ -9,19 +9,19 @@ def getGitBranchName() {
 
 timestamps {
     node {
-	    stage('Checkout') {
-            checkout scm
-        }
+	    // stage('Checkout') {
+        //     checkout scm
+        // }
 
-        stage('Build and Run Tests') {
-            dir('test'){
-                try {
-                    gradle 'clean build'
-                } finally {
-                    junit '**/build/test-results/*.xml'
-                }
-            }
-        }
+        // stage('Build and Run Tests') {
+        //     dir('test'){
+        //         try {
+        //             gradle 'clean build'
+        //         } finally {
+        //             junit '**/build/test-results/*.xml'
+        //         }
+        //     }
+        // }
 
         stage('Deploy Scenarioo Test-Results') {
             dir('test/build') {
