@@ -9,7 +9,7 @@ public class TestConstants {
 
     public static final String BRANCH = getEnvOrDefault("BRANCH_NAME", "gh-pages");
     public static final LocalDateTime DATE = LocalDateTime.now();
-    public static final String BUILD = getEnvOrDefault("BUILD_NAME", DATE.format(DateTimeFormatter.ISO_DATE_TIME));
+    public static final String BUILD = getEnvOrDefault("BUILD_NUMBER", DATE.format(DateTimeFormatter.ISO_DATE_TIME));
     public static final File DOCU_FOLDER;
 
     static {
