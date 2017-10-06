@@ -1,47 +1,56 @@
 package org.scenarioo.pizza.scenarioo;
 
 import org.scenarioo.api.ScenarioDocuWriter;
+import org.scenarioo.model.docu.entities.Branch;
+import org.scenarioo.model.docu.entities.Build;
 
 import java.io.File;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Optional;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Date;
+
 
 public class ScenariooBuildContext {
 
-    private static final String BRANCH_NAME = createBranchName();
-    private static final String BUILD_NAME = createBuildName();
+    private static final String BRANCH_NAME = "pizza-delivery-" + envOrDefault("BRANCH_NAME", "master");
+    private static final String BUILD_NAME = envOrDefault("BUILD_NUMBER", "undefined");
     private static final File DOCUMENTATION_ROOT = new File("build/scenariooDocumentation");
 
-
     static {
-        // Initialize the build at start-up. In real life use cases, this task would typically be performed
-        // by the build environment.
-        ScenariooBuildInitializer buildInitializer = new ScenariooBuildInitializer(DOCUMENTATION_ROOT, BRANCH_NAME, BUILD_NAME);
-        buildInitializer.initialize(getNewWriter());
+        DOCUMENTATION_ROOT.mkdirs();    // Create folder for generated documentation
+        ScenarioDocuWriter writer = getNewWriter();
+        writer.saveBranchDescription(createBranch(BRANCH_NAME));    // Create 'branch.xml'
+        writer.saveBuildDescription(createBuild(BUILD_NAME));       // Create 'build.xml'
+        writer.flush();
     }
 
     public static ScenarioDocuWriter getNewWriter() {
         return new ScenarioDocuWriter(DOCUMENTATION_ROOT, BRANCH_NAME, BUILD_NAME);
     }
 
-
-    private static String createBranchName() {
-        String name = getFromEnvironment("BRANCH_NAME").orElse("master");
-        return "pizza-delivery-" + name;
+    private static Branch createBranch(String name) {
+        Branch branch = new Branch();
+        branch.setName(name);
+        return branch;
     }
 
-    private static String createBuildName() {
-        return getFromEnvironment("BUILD_NUMBER")
-                .orElseGet(() -> {
-                    LocalDateTime now = LocalDateTime.now();
-                    return now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-                });
+    private static Build createBuild(String name) {
+        Build build = new Build();
+        build.setName(name);
+        build.setDate(getCurrentDate());
+        build.setRevision(envOrDefault("GIT_COMMIT", "undefined"));
+        return build;
     }
 
-    private static Optional<String> getFromEnvironment(String name) {
+    private static String envOrDefault(String name, String defaultValue) {
         String environmentVariable = System.getenv(name);
-        return Optional.ofNullable(environmentVariable);
+        return environmentVariable != null ? environmentVariable : defaultValue;
+    }
+
+    private static Date getCurrentDate() {
+        ZonedDateTime zonedDateTime = LocalDateTime.now().atZone(ZoneId.systemDefault());
+        return Date.from(zonedDateTime.toInstant());
     }
 
 }
