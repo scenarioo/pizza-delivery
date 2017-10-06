@@ -14,4 +14,5 @@ dependencies {
     compile 'junit:junit:4.11'
     compile 'org.seleniumhq.selenium:selenium-java:2.+'
     compile 'org.scenarioo:scenarioo-java:2.1.0-RC1'
+    compile 'io.github.bonigarcia:webdrivermanager:1.7.2'
 }
