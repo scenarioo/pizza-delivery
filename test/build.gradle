@@ -16,3 +16,11 @@ dependencies {
     compile 'org.scenarioo:scenarioo-java:2.1.0-RC1'
     compile 'io.github.bonigarcia:webdrivermanager:1.7.2'
 }
+
+sourceSets {
+    test {
+        resources {
+            srcDir '../prod' // Add pizza shop to resources for selenium tests
+        }
+    }
+}
