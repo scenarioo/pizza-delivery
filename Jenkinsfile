@@ -22,10 +22,14 @@ timestamps {
             dir('test/build') {
                 zip dir: 'scenariooDocumentation', zipFile: 'documentation.zip'
                 withCredentials([usernameColonPassword(credentialsId: 'SCENARIOO_DEMO',variable: 'USERPASS')]) {
-                    sh 'curl -u $USERPASS -F file=@documentation.zip http://demo.scenarioo.org/scenarioo-master/rest/builds'
+                    if(env.BRANCH_NAME == 'master'){
+                        sh 'curl -u $USERPASS -F file=@documentation.zip http://demo.scenarioo.org/scenarioo-master/rest/builds'
+                    } else {
+                        sh 'curl -u $USERPASS -F file=@documentation.zip http://demo.scenarioo.org/scenarioo-develop/rest/builds'
+                    }
                 }
             }
 
         }
-     }
+    }
 }
