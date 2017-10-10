@@ -19,7 +19,7 @@ import java.util.List;
 
 public class UseCaseContext {
 
-    private ScenarioDocuWriter writer = ScenariooWriterFactory.getNewWriter();
+    private ScenarioDocuWriter writer = ScenariooBuildContext.getNewWriter();
     private Class<?> webTestClass;
     private String useCaseName;
     private int stepIndex = 0;
