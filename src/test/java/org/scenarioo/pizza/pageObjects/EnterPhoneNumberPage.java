@@ -19,7 +19,7 @@ public class EnterPhoneNumberPage extends BasePage {
 
     private static URL getUrl() {
         ClassLoader classLoader = EnterPhoneNumberPage.class.getClassLoader();
-        URL resource = classLoader.getResource("index.html");
+        URL resource = classLoader.getResource("pizza-shop/index.html");
         if (resource == null) {
             fail("Page not found in resources.");
         }

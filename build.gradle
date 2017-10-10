@@ -17,10 +17,3 @@ dependencies {
     compile 'io.github.bonigarcia:webdrivermanager:1.7.2'
 }
 
-sourceSets {
-    test {
-        resources {
-            srcDir '../pizza-shop' // Add pizza shop to resources for selenium tests
-        }
-    }
-}
