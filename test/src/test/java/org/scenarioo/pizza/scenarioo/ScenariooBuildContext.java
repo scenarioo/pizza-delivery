@@ -13,15 +13,25 @@ import java.util.Date;
 
 public class ScenariooBuildContext {
 
-    private static final String BRANCH_NAME = "pizza-delivery-" + envOrDefault("BRANCH_NAME", "master");
-    private static final String BUILD_NAME = envOrDefault("BUILD_NUMBER", "undefined");
+    private static final String BRANCH_NAME = "pizza-delivery-" + getEnvironmentVariableOrDefault("BRANCH_NAME", "master");
+    private static final String BUILD_NAME = "build-" + getEnvironmentVariableOrDefault("BUILD_NUMBER", "undefined");
     private static final File DOCUMENTATION_ROOT = new File("build/scenariooDocumentation");
 
     static {
-        DOCUMENTATION_ROOT.mkdirs();    // Create folder for generated documentation
+        // on startup - once per test run:
+        initScenariooReportForCurrentBuildRun();
+    }
+
+    /**
+     * Create directory to store the scenarioo report files inside
+     * and store the needed description files for the branch and the build.
+     * This has to be done at least once for a full scenarioo report build.
+     */
+    private static void initScenariooReportForCurrentBuildRun() {
+        DOCUMENTATION_ROOT.mkdirs();
         ScenarioDocuWriter writer = getNewWriter();
-        writer.saveBranchDescription(createBranch(BRANCH_NAME));    // Create 'branch.xml'
-        writer.saveBuildDescription(createBuild(BUILD_NAME));       // Create 'build.xml'
+        writer.saveBranchDescription(createBranch(BRANCH_NAME));
+        writer.saveBuildDescription(createBuild(BUILD_NAME));
         writer.flush();
     }
 
@@ -38,19 +48,13 @@ public class ScenariooBuildContext {
     private static Build createBuild(String name) {
         Build build = new Build();
         build.setName(name);
-        build.setDate(getCurrentDate());
-        build.setRevision(envOrDefault("GIT_COMMIT", "undefined"));
+        build.setDate(new Date());
+        build.setRevision(getEnvironmentVariableOrDefault("GIT_COMMIT", "undefined"));
         return build;
     }
 
-    private static String envOrDefault(String name, String defaultValue) {
+    private static String getEnvironmentVariableOrDefault(String name, String defaultValue) {
         String environmentVariable = System.getenv(name);
         return environmentVariable != null ? environmentVariable : defaultValue;
     }
-
-    private static Date getCurrentDate() {
-        ZonedDateTime zonedDateTime = LocalDateTime.now().atZone(ZoneId.systemDefault());
-        return Date.from(zonedDateTime.toInstant());
-    }
-
 }
