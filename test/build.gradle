@@ -20,7 +20,7 @@ dependencies {
 sourceSets {
     test {
         resources {
-            srcDir '../prod' // Add pizza shop to resources for selenium tests
+            srcDir '../pizza-shop' // Add pizza shop to resources for selenium tests
         }
     }
 }

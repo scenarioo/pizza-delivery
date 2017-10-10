@@ -6,11 +6,9 @@ This example demonstrates how to use the Scenarioo Writer Library in your Seleni
 
 ## Production code
 
-The production code is a very simple pizza ordering web app without a dynamic backend. It's all in the folder `prod`.
+The production code is a very simple pizza ordering web app without a dynamic backend. It's all in the folder `pizza-shop`.
 
-In order to serve this web app under github.io everything is located in the `gh-pages` branch.
-
-If you can't wait to see the pizza ordering awesomeness, look [here](http://scenarioo.github.io/pizza-delivery/prod/index.html) ;-)
+If you can't wait to see the pizza ordering awesomeness, look [here](http://scenarioo.github.io/pizza-delivery/) ;-)
 
 Usage hint: The only known phone number is 0791111111, all other phone numbers require you to enter a new delivery address.
 
