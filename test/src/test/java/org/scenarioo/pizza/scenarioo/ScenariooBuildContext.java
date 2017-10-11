@@ -60,7 +60,7 @@ public class ScenariooBuildContext {
     private static String getBuildNameForCurrentBuildRun() {
         // simplest way is to use build number from your build piepline as identifier
         // this makes it also easy to find reports for a specific build run
-        return "build-" + getEnvironmentVariableOrDefault("BUILD_NUMBER", "undefined")    
+        return "build-" + getEnvironmentVariableOrDefault("BUILD_NUMBER", "undefined");
     }    
     
     private static Branch createBranch(String name) {
