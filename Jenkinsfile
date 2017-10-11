@@ -2,6 +2,12 @@ def gradle(tasks) {
 	 sh "./gradlew --info $tasks"
 }
 
+properties([
+		  pipelineTriggers([
+					 [$class: 'GitHubPushTrigger']
+		  ])
+])
+
 timestamps {
     node {
 	    stage('Checkout') {
