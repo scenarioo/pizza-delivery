@@ -2,4 +2,4 @@
 build
 .gradle
 out
-test.iml
+*.iml
