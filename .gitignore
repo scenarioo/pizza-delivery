@@ -1,6 +1,5 @@
 .idea
-test/build
-test/.gradle
-test/out
-test/test.iml
+build
 .gradle
+out
+*.iml
