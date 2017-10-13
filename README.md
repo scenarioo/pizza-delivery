@@ -16,7 +16,7 @@ cd pizza-delivery
 .\gradlew test
 ```
 
-Scenarioo documentation data is located in `build\scenariooDocumentation` after the test run has finished. In order to browse the data in the Scenarioo Viewer you need to set the viewer up as described in [Setup of Scenarioo Viewer Web App](http://scenarioo.org/docs/setup/Scenarioo-Viewer-Web-Application-Setup.html).
+Scenarioo documentation data is located in `build\scenariooDocumentation` after the test run has finished. In order to browse the data in the Scenarioo Viewer you need to setup the viewer as described in [Setup of Scenarioo Viewer Web App](http://scenarioo.org/docs/setup/Scenarioo-Viewer-Web-Application-Setup.html).
 
 ## Application Under Test
 
