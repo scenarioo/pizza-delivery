@@ -15,17 +15,15 @@ timestamps {
         }
 
         stage('Build and Run Tests') {
-            dir('test'){
-                try {
-                    gradle 'clean build'
-                } finally {
-                    junit '**/build/test-results/*.xml'
-                }
+            try {
+                gradle 'clean build'
+            } finally {
+                junit '**/build/test-results/*.xml'
             }
         }
 
         stage('Deploy Scenarioo Test-Results') {
-            dir('test/build') {
+            dir('build') {
                 zip dir: 'scenariooDocumentation', zipFile: 'documentation.zip'
                 withCredentials([usernameColonPassword(credentialsId: 'SCENARIOO_DEMO',variable: 'USERPASS')]) {
                     if(env.BRANCH_NAME == 'master'){
