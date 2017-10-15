@@ -1,6 +1,7 @@
 package org.scenarioo.pizza.scenarioo;
 
 import org.scenarioo.api.ScenarioDocuWriter;
+import org.scenarioo.api.util.IdentifierSanitizer;
 import org.scenarioo.model.docu.entities.Branch;
 import org.scenarioo.model.docu.entities.Build;
 
@@ -13,8 +14,8 @@ import java.util.Date;
 
 public class ScenariooBuildContext {
 
-    private static final String BRANCH_NAME = "pizza-delivery-" + getEnvironmentVariableOrDefault("BRANCH_NAME", "master");
-    private static final String BUILD_NAME = "build-" + getEnvironmentVariableOrDefault("BUILD_NUMBER", "undefined");
+    private static final String BRANCH_NAME = getBranchNameForCurrentBuildRun();
+    private static final String BUILD_NAME = getBuildNameForCurrentBuildRun();
     private static final File DOCUMENTATION_ROOT = new File("build/scenariooDocumentation");
 
     static {
@@ -33,12 +34,35 @@ public class ScenariooBuildContext {
         writer.saveBranchDescription(createBranch(BRANCH_NAME));
         writer.saveBuildDescription(createBuild(BUILD_NAME));
         writer.flush();
-    }
+    }  
 
     public static ScenarioDocuWriter getNewWriter() {
         return new ScenarioDocuWriter(DOCUMENTATION_ROOT, BRANCH_NAME, BUILD_NAME);
     }
-
+    
+    /**    
+     * Define a branch name to identify which branch of your software under test is tested and documented in the scenarioo reports.     
+     *
+     * If you do not want to support documentation for multiple branches, you could of course simply use a constant here for a start.
+     */    
+    private static String getBranchNameForCurrentBuildRun() {
+        // Define your branch name, as you wish, e.g. by reading current branch name from build environment        
+        String branchName = getEnvironmentVariableOrDefault("BRANCH_NAME", "local");
+        // Since scenarioo can currently not handle special characters like `/` in identifiers
+        // we have to currently sanitize those (to be able to handle branch names like for example `feature/my-branch-name`).
+        String sanitizedBranchName = IdentifierSanitizer.sanitize(branchName);        
+        return "pizza-delivery-" + sanitizedBranchName;
+    } 
+    
+    /**
+     * Define a unique build identifier name to be used to identify the generated documentation build in scenarioo.
+     */
+    private static String getBuildNameForCurrentBuildRun() {
+        // simplest way is to use build number from your build piepline as identifier
+        // this makes it also easy to find reports for a specific build run
+        return "build-" + getEnvironmentVariableOrDefault("BUILD_NUMBER", "undefined");
+    }    
+    
     private static Branch createBranch(String name) {
         Branch branch = new Branch();
         branch.setName(name);
@@ -56,5 +80,6 @@ public class ScenariooBuildContext {
     private static String getEnvironmentVariableOrDefault(String name, String defaultValue) {
         String environmentVariable = System.getenv(name);
         return environmentVariable != null ? environmentVariable : defaultValue;
-    }
+    } 
+        
 }
