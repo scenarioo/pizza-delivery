@@ -43,3 +43,7 @@ done
 # 2. Cleanup outdated builds for master branch (never deleted)
 # in scenarioo's master demo data dir:
 ./ci/cleanupOutdatedScenariooBuilds.sh --dir=/var/lib/scenarioo/data/master/pizza-delivery-master
+
+# 3. Cause scenarioo viewers to update all available builds
+curl http://demo.scenarioo.org/scenarioo-master/rest/builds/updateAndImport
+curl http://demo.scenarioo.org/scenarioo-develop/rest/builds/updateAndImport
