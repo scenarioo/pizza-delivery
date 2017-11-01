@@ -11,7 +11,11 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
-
+/**
+ * Global context to setup basic scenarioo reporting for one scenarioo documentation build.
+ *
+ * Defines where the build is stored (root dir, branch and build name) and provides global access to get a writer for writing into this scenarioo build reports.
+ */
 public class ScenariooBuildContext {
 
     private static final String BRANCH_NAME = getBranchNameForCurrentBuildRun();
@@ -34,8 +38,14 @@ public class ScenariooBuildContext {
         writer.saveBranchDescription(createBranch(BRANCH_NAME));
         writer.saveBuildDescription(createBuild(BUILD_NAME));
         writer.flush();
-    }  
+    }
 
+    /**
+     * Get a scenarioo writer to write reports for this build.
+     * You could use multiple writer instances (e.g. in a multithreaded setup)
+     * to write into the same reports. Each writer can only be used once
+     * until `flush()` is called to finish writing (which the writer does asynch).
+     */
     public static ScenarioDocuWriter getNewWriter() {
         return new ScenarioDocuWriter(DOCUMENTATION_ROOT, BRANCH_NAME, BUILD_NAME);
     }
