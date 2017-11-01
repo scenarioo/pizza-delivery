@@ -16,9 +16,8 @@
 #   * Keep all builds with a keep.txt file inside
 #   * remove all other builds (exceeding 5 builds or older than 5 days)
 
-echo "Cleanup Scenarioo Report Data of all branches for Pizza Example ..."
-
 # 1. Cleanup all pizza example data branch directories inside develop demo data dir:
+echo "Cleanup Scenarioo Report Data of all branches for Pizza Example ..."
 SCENARIOO_DATA_ROOT=/var/lib/scenarioo/data/develop
 git fetch -p
 if (( $? )); then
@@ -39,11 +38,12 @@ for BRANCH_DIR in $(find $SCENARIOO_DATA_ROOT/* -maxdepth 0 -type d) ; do
         fi
     fi
 done
+curl http://demo.scenarioo.org/scenarioo-develop/rest/builds/updateAndImport
 
 # 2. Cleanup outdated builds for master branch (never deleted)
 # in scenarioo's master demo data dir:
+# (in a real project setup you would probably use same viewer version for all your branches
+#  so you could skip this special step!)
+echo "Cleanup Scenarioo Report Data of master branch for Pizza Example ..."
 ./ci/cleanupOutdatedScenariooBuilds.sh --dir=/var/lib/scenarioo/data/master/pizza-delivery-master
-
-# 3. Cause scenarioo viewers to update all available builds
 curl http://demo.scenarioo.org/scenarioo-master/rest/builds/updateAndImport
-curl http://demo.scenarioo.org/scenarioo-develop/rest/builds/updateAndImport
