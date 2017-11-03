@@ -2,14 +2,6 @@ def gradle(tasks) {
 	 sh "./gradlew --info -s --no-daemon $tasks"
 }
 
-def uploadDocu() {
-STATUSCODE=$(curl --silent --output /dev/stderr --write-out "%{http_code}" URL)
-
-if test $STATUSCODE -ne 200; then
-    # error handling
-fi
-}
-
 def getEncodedBranchName() {
      // just to make sure that slashes in branch names cause no problems
 	 String branchName = "${env.BRANCH_NAME}"
