@@ -24,7 +24,7 @@ if (( $? )); then
   echo "Failure: git repo not available." >&2
   exit 1
 fi
-AVAILABLE_BRANCHES=$(git branch -r | awk '{print pizza-delivery-$1}' | sed 's/origin\///g' | sed 's/\//\_/g' )
+AVAILABLE_BRANCHES=$(git branch -r | awk '{ print "pizza-delivery-" $1 }' | sed 's/origin\///g' | sed 's/\//\_/g' )
 for BRANCH in $AVAILABLE_BRANCHES ; do
     echo "$BRANCH"
 done
