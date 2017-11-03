@@ -80,6 +80,8 @@ timestamps {
                     }
                 }
 
+                archiveArtifacts artifacts: 'build/documentation.zip'
+
             }
         }
 
