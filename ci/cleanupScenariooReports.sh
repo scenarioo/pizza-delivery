@@ -25,9 +25,6 @@ if (( $? )); then
   exit 1
 fi
 AVAILABLE_BRANCHES=$(git branch -r | awk '{ print "pizza-delivery-" $1 }' | sed 's/origin\///g' | sed 's/\//\_/g' )
-for BRANCH in $AVAILABLE_BRANCHES ; do
-    echo "$BRANCH"
-done
 for BRANCH_DIR in $(find $SCENARIOO_DATA_ROOT/* -maxdepth 0 -type d) ; do
     BRANCH_NAME=$(basename $BRANCH_DIR)
     if echo "$AVAILABLE_BRANCHES" | grep -Fxq "$BRANCH_NAME"
