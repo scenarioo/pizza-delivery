@@ -75,7 +75,7 @@ timestamps {
                         // for all others: to scenarioo-develop demo
                         def docuDeploymentScenariooInstance = encodedBranchName == "master" ? "master" : "develop"
                         def scenariooUrl = "http://demo.scenarioo.org/scenarioo-${docuDeploymentScenariooInstance}"
-                        sh "curl -u $USERPASS -F file=@documentation.zip $scenariooUrl/rest/builds"
+                        sh "curl -u bla:bla -F file=@documentation.zip $scenariooUrl/rest/builds"
                         reportJenkinsSummaryScenariooReports(scenariooUrl, "pizza-delivery-${encodedBranchName}", "build-${env.BUILD_NUMBER}")
                     }
                 }
