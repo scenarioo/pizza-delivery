@@ -1,19 +1,15 @@
-group = 'net.adiherzog'
-version = '1.0.0-SNAPSHOT'
+group = 'org.scenarioo'
+version = '2.1.1-SNAPSHOT'
 
 apply plugin: 'java'
 
 repositories {
     mavenCentral()
-    maven {
-        url "https://raw.github.com/scenarioo/mvn-repo/master"
-    }
 }
 
 dependencies {
-    compile 'junit:junit:4.11'
+    testCompile("junit:junit:4.12")
     compile 'org.seleniumhq.selenium:selenium-java:2.+'
-    compile 'org.scenarioo:scenarioo-java:2.1.0-RC1'
+    compile 'org.scenarioo:scenarioo-java:2.1.1'
     compile 'io.github.bonigarcia:webdrivermanager:1.7.2'
 }
-
