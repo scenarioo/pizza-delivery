@@ -1,15 +1,35 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.1'
+    }
+}
+
 group = 'org.scenarioo'
 version = '2.1.1-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'org.junit.platform.gradle.plugin'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
+
+    // Junit 5 Dependencies
+    testCompile("org.junit.platform:junit-platform-runner:1.0.1")
+    testCompile("org.junit.jupiter:junit-jupiter-api:5.0.1")
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.0.1")
+
+    // Vintage support for running our JUnit 4 tests
+    testRuntime("org.junit.vintage:junit-vintage-engine:4.12.1")
     testCompile("junit:junit:4.12")
+
     compile 'org.seleniumhq.selenium:selenium-java:2.+'
     compile 'org.scenarioo:scenarioo-java:2.1.1'
     compile 'io.github.bonigarcia:webdrivermanager:1.7.2'
+
 }
