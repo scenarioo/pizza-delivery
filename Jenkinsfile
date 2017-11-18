@@ -65,7 +65,7 @@ timestamps {
             } finally {
 
                 // Junit Test Reports
-                junit '**/build/test-results/*.xml'
+                junit '**/build/test-results/**/*.xml'
 
                 // Deploy scenarioo test reports in any case, also in case of test failures (inside finally!)
                 dir('build') {
