@@ -1,12 +1,6 @@
 package org.scenarioo.pizza.scenarioo;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.*;
-import org.scenarioo.pizza.scenarioo.UseCaseContext;
-import org.scenarioo.pizza.scenarioo.UseCaseContextHolder;
-import org.junit.rules.TestRule;
-import org.junit.runner.Description;
-import org.junit.runners.model.Statement;
 import org.scenarioo.model.docu.entities.Status;
 import org.scenarioo.pizza.selenium.WebDriverHolder;
 
@@ -30,13 +24,13 @@ public class ScenariooReporter implements
 
     @Override
     public void afterAll(ExtensionContext context) throws Exception {
-        UseCaseContextHolder.INSTANCE. getUseCaseContext().finishUseCase();
+        UseCaseContextHolder.INSTANCE.getUseCaseContext().finishUseCase();
         WebDriverHolder.INSTANCE.closeBrowser();
     }
 
     @Override
     public void beforeEach(ExtensionContext context) throws Exception {
-        UseCaseContext useCaseContext  = UseCaseContextHolder.INSTANCE.getUseCaseContext();
+        UseCaseContext useCaseContext = UseCaseContextHolder.INSTANCE.getUseCaseContext();
         useCaseContext.startNewScenario(context.getRequiredTestMethod().getName());
     }
 
