@@ -1,14 +1,15 @@
 package org.scenarioo.pizza.pageObjects;
 
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class EnterAddressPage extends BasePage {
 
     public static void assertPageIsShown() {
-        Assert.assertTrue(getStepElement().isDisplayed());
+        assertTrue(getStepElement().isDisplayed(), "Expected page to be displayed");
     }
 
     public static void enterAddress() {

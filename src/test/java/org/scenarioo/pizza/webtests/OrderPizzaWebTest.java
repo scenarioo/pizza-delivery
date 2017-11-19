@@ -1,8 +1,8 @@
 package org.scenarioo.pizza.webtests;
 
+import org.junit.jupiter.api.Test;
 import org.scenarioo.pizza.scenarioo.annotations.Description;
 import org.scenarioo.pizza.scenarioo.annotations.Labels;
-import org.junit.Test;
 import org.scenarioo.pizza.pageObjects.*;
 
 @Description("Order a pizza and drinks from \"Hot Pizza Delivery\".")
