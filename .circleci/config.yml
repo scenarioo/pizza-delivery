@@ -13,7 +13,7 @@ jobs:
     - checkout
 
     - run:
-        # @cgrossde I dont understand why this is needed here but not in your builds, see https://stackoverflow.com/questions/49163104/how-to-resolve-term-not-set-on-gradlew-assemblerelease-on-circleci
+        # @cgrossde I dont understand why this TERM env var is needed here but not in your builds, see https://stackoverflow.com/questions/49163104/how-to-resolve-term-not-set-on-gradlew-assemblerelease-on-circleci
         name: Configure Env Vars
         command: |
           echo 'export TERM=xterm' >> $BASH_ENV
