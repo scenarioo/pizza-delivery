@@ -5,7 +5,7 @@ jobs:
     working_directory: ~/repo
 
     docker:
-    - image: circleci/openjdk:8-jdk
+    - image: circleci/openjdk:8-jdk-browsers
 
     steps:
 
@@ -50,3 +50,4 @@ jobs:
         command: |
           echo "Build Result Summary: \n"
           cat ./artifacts/build-result-summary.txt
+        when: always
