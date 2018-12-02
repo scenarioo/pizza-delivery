@@ -19,7 +19,7 @@ jobs:
 
     - run:
         name: Clean & install
-        command: ./gradlew clean build -test -s --no-daemon
+        command: ./gradlew clean build -x test -i -s --no-daemon
 
     - run:
         name: Tests
