@@ -12,7 +12,7 @@ jobs:
     - checkout
     - run:
         name: Clean & install
-        command: ./gradlew clean build -test -i -s --no-daemon
+        command: ./gradlew clean build -test -s --no-daemon
 
     - run:
         name: Tests
