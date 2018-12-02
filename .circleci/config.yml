@@ -14,8 +14,11 @@ jobs:
 
     - run:
         # @cgrossde I dont understand why this is needed here but not in your builds, see https://stackoverflow.com/questions/49163104/how-to-resolve-term-not-set-on-gradlew-assemblerelease-on-circleci
-        name: Configure for Gradle Execution
-        command: echo 'export TERM=xterm' >> $BASH_ENV
+        name: Configure Env Vars
+        command: |
+          echo 'export TERM=xterm' >> $BASH_ENV
+          echo 'export BRANCH_NAME=$CIRCLE_BRANCH' >> $BASH_ENV
+          echo 'export BUILD_NUMBER=$CIRCLE_BUILD_NUM' >> $BASH_ENV
 
     - run:
         name: Clean & install
@@ -23,22 +26,23 @@ jobs:
 
     - run:
         name: Tests
-        command: ./gradlew test -i -s --no-daemon
+        command: |
+          export BRANCH_NAME=`echo $CIRCLE_BRANCH | sed 's/\//\-/' | sed 's/\#/\-/'`
+          ./gradlew test -i -s --no-daemon
 
     - run:
         name: Publish Scenarioo E2E Test Docu Reports to http://demo.scenarioo.org
         command: |
           mkdir -p artifacts
-          export BRANCH=`echo $CIRCLE_BRANCH | sed 's/\//\-/' | sed 's/\#/\-/'`
-          export SCENARIOO_INSTANCE_FOR_DEPLOY=$([ "$BRANCH" == "master" ] && echo "master" || echo "develop")
+          export SCENARIOO_INSTANCE_FOR_DEPLOY=$([ "$BRANCH_NAME" == "master" ] && echo "master" || echo "develop")
           echo "Publishing Scenarioo Test Documentation Reports to http://demo.scenarioo.org/scenarioo-${SCENARIOO_INSTANCE_FOR_DEPLOY} ..."
           pushd build/scenariooDocumentation
           zip -r ../e2eScenariooDocu.zip ./*
           popd
           echo "Uploading ... "
           curl -f --user scenarioo:$TOMCAT_USER_PASSWORD -F"file=@build/e2eScenariooDocu.zip" http://demo.scenarioo.org/scenarioo-${SCENARIOO_INSTANCE_FOR_DEPLOY}/rest/builds
-          echo -e "Pizza Delivery Scenarioo E2E Test Docu Reports:\nhttp://demo.scenarioo.org/scenarioo-${SCENARIOO_INSTANCE_FOR_DEPLOY}/#/?branch=${BRANCH}&build=build-${CIRCLE_BUILD_NUM}\n" >> ./artifacts/build-result-summary.txt
-          echo "Pizza Delivery Scenarioo E2E Test Documentation Reports published to http://demo.scenarioo.org/scenarioo-${SCENARIOO_INSTANCE_FOR_DEPLOY}/#/?branch=${BRANCH}&build=build-${CIRCLE_BUILD_NUM}"
+          echo -e "Pizza Delivery Scenarioo E2E Test Docu Reports:\nhttp://demo.scenarioo.org/scenarioo-${SCENARIOO_INSTANCE_FOR_DEPLOY}/#/?branch=${BRANCH_NAME}&build=build-${BUILD_NUMBER}\n" >> ./artifacts/build-result-summary.txt
+          echo "Pizza Delivery Scenarioo E2E Test Documentation Reports published to http://demo.scenarioo.org/scenarioo-${SCENARIOO_INSTANCE_FOR_DEPLOY}/#/?branch=${BRANCH_NAME}&build=build-${BUILD_NUMBER}"
         when: always
 
     - store_test_results:
