@@ -1,0 +1,52 @@
+version: 2
+jobs:
+  build:
+
+    working_directory: ~/repo
+
+    docker:
+    - image: circleci/openjdk:8-jdk
+
+    steps:
+
+    - checkout
+    - run:
+        name: Clean & install
+        command: ./gradlew clean build -test -i -s --no-daemon
+
+    - run:
+        name: Tests
+        command: ./gradlew test -i -s --no-daemon
+
+    - run:
+        name: Publish Scenarioo E2E Test Docu Reports to http://demo.scenarioo.org
+        command: |
+          mkdir -p artifacts
+          export BRANCH=`echo $CIRCLE_BRANCH | sed 's/\//\-/' | sed 's/\#/\-/'`
+          export SCENARIOO_INSTANCE_FOR_DEPLOY=`$([ "$BRANCH" == "master" ] && echo "master" || echo "develop")`
+          pushd build/scenariooDocumentation
+          zip -r ../e2eScenariooDocu.zip ./*
+          popd
+          curl -f --user scenarioo:$TOMCAT_USER_PASSWORD -F"file=@build/e2eScenariooDocu.zip" http://demo.scenarioo.org/scenarioo-${SCENARIOO_INSTANCE_FOR_DEPLOY}/rest/builds
+          echo "Pizza Delivery Scenarioo E2E Test Docu Reports:\nhttp://demo.scenarioo.org/scenarioo-${SCENARIOO_INSTANCE_FOR_DEPLOY}/#/?branch=${BRANCH}&build=build-${CIRCLE_BUILD_NUM}\n" >> ./artifacts/build-result-summary.txt
+          echo "Pizza Delivery Scenarioo E2E Test Docu Reports published to http://demo.scenarioo.org/scenarioo-${SCENARIOO_INSTANCE_FOR_DEPLOY}/#/?branch=${BRANCH}&build=build-${CIRCLE_BUILD_NUM}"
+        when: always
+
+    - store_test_results:
+        path: build/test-results
+
+    - run:
+        name: Collect artifacts
+        command: |
+          cp -pR build/test-results artifacts || true
+          cp -pR build/scenariooDocumentation artifacts || true
+
+    - store_artifacts:
+        path: artifacts
+        destination: /
+
+    - run:
+        name: Build Result Summary
+        command: |
+          echo "Build Result Summary: \n"
+          cat ./artifacts/build-result-summary.txt
