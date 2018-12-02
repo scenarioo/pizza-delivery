@@ -30,7 +30,7 @@ jobs:
         command: |
           mkdir -p artifacts
           export BRANCH=`echo $CIRCLE_BRANCH | sed 's/\//\-/' | sed 's/\#/\-/'`
-          export SCENARIOO_INSTANCE_FOR_DEPLOY=`$([ "$BRANCH" == "master" ] && echo "master" || echo "develop")`
+          export SCENARIOO_INSTANCE_FOR_DEPLOY=$([ "$BRANCH" == "master" ] && echo "master" || echo "develop")
           pushd build/scenariooDocumentation
           zip -r ../e2eScenariooDocu.zip ./*
           popd
