@@ -17,7 +17,7 @@ jobs:
         name: Configure Env Vars
         command: |
           echo 'export TERM=xterm' >> $BASH_ENV
-          echo 'export BRANCH_NAME=$CIRCLE_BRANCH' >> $BASH_ENV
+          echo 'export BRANCH_NAME=`echo $CIRCLE_BRANCH | sed \'s/\//\-/\' | sed \'s/\#/\-/\'`' >> $BASH_ENV
           echo 'export BUILD_NUMBER=$CIRCLE_BUILD_NUM' >> $BASH_ENV
 
     - run:
@@ -26,9 +26,7 @@ jobs:
 
     - run:
         name: Tests
-        command: |
-          export BRANCH_NAME=`echo $CIRCLE_BRANCH | sed 's/\//\-/' | sed 's/\#/\-/'`
-          ./gradlew test -i -s --no-daemon
+        command: ./gradlew test -i -s --no-daemon
 
     - run:
         name: Publish Scenarioo E2E Test Docu Reports to http://demo.scenarioo.org
