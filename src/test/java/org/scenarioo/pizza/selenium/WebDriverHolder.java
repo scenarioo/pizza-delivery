@@ -14,7 +14,8 @@ import org.openqa.selenium.support.events.EventFiringWebDriver;
  * needed without passing any references.
  * <p>
  * Currently this holder only supports one concurrent WebDriver. If you want to run your tests in parallel
- * you should extend the holder to hold an instance of a WebDriver for each thread.
+ * you should extend the holder to hold an instance of a WebDriver for each thread
+ * or do the setup and passing around of the driver differently.
  */
 public enum WebDriverHolder {
 

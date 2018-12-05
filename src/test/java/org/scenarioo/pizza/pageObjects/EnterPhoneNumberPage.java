@@ -1,11 +1,10 @@
 package org.scenarioo.pizza.pageObjects;
 
-import org.junit.Assert;
 import org.openqa.selenium.By;
 
 import java.net.URL;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class EnterPhoneNumberPage extends BasePage {
 
@@ -43,7 +42,7 @@ public class EnterPhoneNumberPage extends BasePage {
     }
 
     public static void assertPhoneNumberOfHotPizzaDeliveryIsDisplayed() {
-        Assert.assertTrue(getWebDriver().findElement(By.id("hot-pizza-delivery-phone-number")).isDisplayed());
+        assertTrue(getWebDriver().findElement(By.id("hot-pizza-delivery-phone-number")).isDisplayed(), "Expected page to be displayed");
     }
 
 }
