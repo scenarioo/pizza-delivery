@@ -51,6 +51,7 @@ jobs:
         command: |
           cp -pR build/test-results artifacts || true
           cp -pR build/scenariooDocumentation artifacts || true
+          cp -pR build/e2eScenariooDocu.zip artifacts || true
 
     - store_artifacts:
         path: artifacts
