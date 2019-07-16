@@ -38,7 +38,7 @@ jobs:
           zip -r ../../e2eScenariooDocu.zip ./*
           popd
 
-          curl -f --user scenarioo:$TOMCAT_USER_PASSWORD -F"file=@e2eScenariooDocu.zip" http://demo.scenarioo.org/scenarioo-feature-402-fix-rest-upload/rest/builds
+          curl -f --user scenarioo:$TOMCAT_USER_PASSWORD -F"file=@e2eScenariooDocu.zip" http://demo.scenarioo.org/scenarioo-develop/rest/builds
           echo -e "Pizza Delivery Scenarioo E2E Test Docu Reports:\nhttp://demo.scenarioo.org/scenarioo-develop/#/?branch=pizza-delivery-${BRANCH_NAME}&build=build-${BUILD_NUMBER}\n" >> ./artifacts/build-result-summary.txt
           echo "Pizza Delivery Scenarioo E2E Test Documentation Reports published to http://demo.scenarioo.org/scenarioo-develop/#/?branch=pizza-delivery-${BRANCH_NAME}&build=build-${BUILD_NUMBER}"
         when: always
