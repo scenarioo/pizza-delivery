@@ -34,8 +34,8 @@ public class ScenariooEventListener extends AbstractWebDriverEventListener {
     }
 
     @Override
-    public void beforeChangeValueOf(WebElement element, WebDriver driver) {
-        super.beforeChangeValueOf(element, driver);
+    public void beforeChangeValueOf(WebElement element, WebDriver driver, CharSequence[] keysToSend) {
+        super.beforeChangeValueOf(element, driver, keysToSend);
         useCaseContext.addScreenAnnotation(createChangeValueScreenAnnotation(element));
     }
 
