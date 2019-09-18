@@ -7,8 +7,7 @@ import org.scenarioo.model.docu.entities.Build;
 
 import java.io.File;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
@@ -68,9 +67,7 @@ public class ScenariooBuildContext {
      * Define a unique build identifier name to be used to identify the generated documentation build in scenarioo.
      */
     private static String getBuildNameForCurrentBuildRun() {
-        // simplest way is to use build number from your build piepline as identifier
-        // this makes it also easy to find reports for a specific build run
-        return "build-" + getEnvironmentVariableOrDefault("BUILD_NUMBER", "undefined");
+        return "build-" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy-hhmmss"));
     }    
     
     private static Branch createBranch(String name) {
