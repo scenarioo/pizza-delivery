@@ -31,7 +31,7 @@
                 <h3>Please enter your phone number <small>step 1 of 4</small></h3>
 
                 <p>
-                    <strong>Phone number:</strong> <input type="text" id="phoneNumber" maxlength="15" size="20" />
+                    <strong>Phone number:</strong> <input type="text" id="phoneNumber" maxlength="15" size="20"/>
                 </p>
 
                 <button class="btn btn-primary next">Next</button>
@@ -45,7 +45,8 @@
                 <p><strong>Street and house number</strong>: Heimlieferstrasse 123</p>
                 <p><strong>Zip code and City</strong>: 8001 Zürich</p>
 
-                <button class="yes" class="btn btn-primary">Yes</button> <button class="no" class="btn btn-primary">No</button>
+                <button class="yes" class="btn btn-primary">Yes</button>
+                <button class="no" class="btn btn-primary">No</button>
             </div>
 
             <div id="step-enterAddress" style="display: none;">
@@ -53,8 +54,10 @@
 
                 <p>Seems we don't know your correct address yet. Please enter it below:</p>
 
-                <p><strong>Street and house number</strong>: <input type="text" id="streetAndHouseNumber" maxlength="40" size="30" /></p>
-                <p><strong>Zip code and City</strong>: <input type="text" id="zipCodeAndCity" maxlength="40" size="30" /></p>
+                <p><strong>Street and house number</strong>: <input type="text" id="streetAndHouseNumber" maxlength="40"
+                                                                    size="30"/></p>
+                <p><strong>Zip code and City</strong>: <input type="text" id="zipCodeAndCity" maxlength="40" size="30"/>
+                </p>
 
                 <button class="btn btn-primary next">Back</button>
                 <button class="btn btn-primary next">Next</button>
@@ -85,7 +88,8 @@
                 </p>
 
                 <p>
-                    <input type="radio" name="pizza" value="Pizza Back To The Future" id="a"/> <label for="a">Pizza Back To The Future (dehydrated)</label>
+                    <input type="radio" name="pizza" value="Pizza Back To The Future" id="a"/> <label for="a">Pizza Back
+                    To The Future (dehydrated)</label>
                 </p>
                 <button class="btn btn-primary next">Looks fine</button>
             </div>
@@ -120,6 +124,7 @@
                 <p>Drinks: <span id="summary_drinks"></span></p>
 
                 <button class="btn btn-primary next">Order</button>
+                <div id="processing-order" style="display: none; font-weight: bold;">Processing order...</div>
             </div>
             <div id="step-confirmation" style="display: none;">
                 <h3>Thanks for your order! <small>step 6 of 6</small></h3>
