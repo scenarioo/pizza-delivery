@@ -9,8 +9,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class ConfirmationPage extends BasePage {
 
     public static void assertConfirmationPageIsDisplayed() {
-        // Spinner takes 10 seconds
-        WebDriverWait webDriverWait = new WebDriverWait(getWebDriver(), 15);
+        // Spinner takes around 7 seconds - so wait slightly longer
+        WebDriverWait webDriverWait = new WebDriverWait(getWebDriver(), 10);
         webDriverWait.until(ExpectedConditions.visibilityOf(getStepElement()));
     }
 
