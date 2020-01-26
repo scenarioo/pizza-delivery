@@ -20,7 +20,7 @@ public class EnterPhoneNumberPage extends BasePage {
 
     private static URL getUrl() {
         ClassLoader classLoader = EnterPhoneNumberPage.class.getClassLoader();
-        File file = new File("docs/pizza-delivery-shop/index.html");
+        File file = new File("docs/pizza-shop/index.html");
         URL resource = null;
         try {
             resource = file.toURI().toURL();
