@@ -2,13 +2,16 @@ package org.scenarioo.pizza.pageObjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 public class ConfirmationPage extends BasePage {
 
     public static void assertConfirmationPageIsDisplayed() {
-        assertTrue(getStepElement().isDisplayed(), "Expect page to be displayed");
+        // Spinner takes 10 seconds
+        WebDriverWait webDriverWait = new WebDriverWait(getWebDriver(), 15);
+        webDriverWait.until(ExpectedConditions.visibilityOf(getStepElement()));
     }
 
     private static WebElement getStepElement() {
