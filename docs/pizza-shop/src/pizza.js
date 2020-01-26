@@ -98,7 +98,7 @@
         setTimeout(() => {
             animation = false;
             goToStep(steps.confirmation);
-        }, 8 * 1000);
+        }, 6 * 1000);
 
         function animateProcessing() {
             if (!animation) {
