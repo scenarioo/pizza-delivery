@@ -12,7 +12,7 @@ public class SelectPizzaPage extends BasePage {
     }
 
     public static void selectPizzaVerdura() {
-        getWebDriver().findElement(By.id("v")).click();
+        getWebDriver().findElement(By.id("pizza-verdura")).click();
     }
 
     public static void clickNextButton() {
