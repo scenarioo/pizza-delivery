@@ -2,6 +2,8 @@ package org.scenarioo.pizza.pageObjects;
 
 import org.openqa.selenium.By;
 
+import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,9 +20,15 @@ public class EnterPhoneNumberPage extends BasePage {
 
     private static URL getUrl() {
         ClassLoader classLoader = EnterPhoneNumberPage.class.getClassLoader();
-        URL resource = classLoader.getResource("pizza-shop/index.html");
+        File file = new File("docs/pizza-shop/index.html");
+        URL resource = null;
+        try {
+            resource = file.toURI().toURL();
+        } catch (MalformedURLException e) {
+            fail("Malformed URL: " + e.getMessage());
+        }
         if (resource == null) {
-            fail("Page not found in resources.");
+            fail("Webpage resource not found.");
         }
         return resource;
     }
